@@ -1,0 +1,7 @@
+@import "settings.scss";
+
+@mixin container {
+  margin: 0 auto;
+  padding: $base-size/2 $base-size;
+  max-width: 1180px;
+}

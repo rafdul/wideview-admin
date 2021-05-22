@@ -1,0 +1,18 @@
+@import '../../../styles/settings.scss';
+
+.root {
+  .containerHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .mainLogo {
+      max-width: 225px;
+      min-width: 150px;
+
+      .image {
+        width: 100%;
+      }
+    }
+  }
+}
