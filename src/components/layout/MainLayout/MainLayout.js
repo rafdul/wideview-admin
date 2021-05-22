@@ -14,7 +14,6 @@ const Component = ({className, children}) => (
   <div className={clsx(className, styles.root)}>
     <div className={styles.container}>
       <Header />
-      <h2>MainLayout</h2>
       {children}
     </div>
   </div>

@@ -14,5 +14,30 @@
         width: 100%;
       }
     }
+
+    .mainMenu {
+      .menu__list {
+        background-color: #ffffff!important;
+
+        .menu__list__item {
+          font-family: $font-text;
+          font-size: $base-size*1.5;
+          margin: 0 $base-size;
+          min-width: 100px;
+        }
+      }
+    }
+  }
+
+  @media(max-width: 600px) {
+    .containerHeader {
+      flex-direction: column;
+    }
+  }
+
+  @media(max-width: 400px) {
+    .menu__list__flex {
+      flex-direction: column;
+    }
   }
 }

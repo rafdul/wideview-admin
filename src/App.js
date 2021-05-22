@@ -34,8 +34,8 @@ const App = () => (
               <Route exact path='/orders' component={Orders} />
               <Route exact path='/orders/:id' component={Order} />
               <Route exact path='/offers' component={Offers} />
-              <Route exact path='/offers/:id' component={Offer} />
               <Route exact path='/offers/add' component={AddOffer} />
+              <Route exact path='/offers/:id' component={Offer} />
               <Route path='*' component={NotFound} />
             </Switch>
           </MainLayout>

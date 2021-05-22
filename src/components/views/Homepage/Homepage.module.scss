@@ -1,4 +1,25 @@
 @import '../../../styles/settings.scss';
+@import '../../../styles/mixins.scss';
 
-// .root {
-// }
+.root {
+  .title {
+    @include titleOfPage;
+  }
+
+  .containerHomepage {
+    .box {
+      &__item {
+        margin: $base-size/2;
+      }
+    }
+  }
+
+  .btnContainer {
+    text-align: center;
+
+    &__item {
+      @include btn;
+    }
+  }
+
+}

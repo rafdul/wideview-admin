@@ -5,3 +5,18 @@
   padding: $base-size/2 $base-size;
   max-width: 1180px;
 }
+
+@mixin titleOfPage {
+  margin: $base-size*2 $base-size/2;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 8px #808080a9;
+}
+
+@mixin btn {
+  margin: $base-size/2;
+
+  a {
+    color: #ffffff;
+    text-decoration: none;
+  }
+}
