@@ -10,7 +10,7 @@ import styles from './Orders.module.scss';
 
 const Component = ({className, children}) => (
   <div className={clsx(className, styles.root)}>
-    <h2>Orders</h2>
+    <h2 className={styles.title}>Orders</h2>
     {children}
   </div>
 );

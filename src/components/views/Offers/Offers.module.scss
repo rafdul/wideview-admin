@@ -1,4 +1,8 @@
 @import '../../../styles/settings.scss';
+@import '../../../styles/mixins.scss';
 
-// .root {
-// }
+.root {
+  .title {
+    @include titleOfPage;
+  }
+}

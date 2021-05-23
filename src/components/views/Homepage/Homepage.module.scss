@@ -14,12 +14,31 @@
     }
   }
 
+  .subtitle {
+    margin: $base-size;
+  }
+
   .btnContainer {
     text-align: center;
 
     &__item {
       @include btn;
     }
+
+    &__more {
+      a {
+        color: $color-primary;
+      }
+    }
+  }
+
+  .table {
+    &__body {
+      th, td {
+        font-size: 0.8rem;
+      }
+    }
+
   }
 
 }

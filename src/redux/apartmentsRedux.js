@@ -3,6 +3,7 @@ import { API_URL } from '../config';
 
 /* selectors */
 export const getAllApartments = ({apartments}) => apartments.data;
+export const getFiveApartments = ({apartments}) => apartments.data.slice(0,4);
 
 /* action name creator */
 const reducerName = 'apartments';

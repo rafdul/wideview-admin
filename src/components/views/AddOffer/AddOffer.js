@@ -10,7 +10,7 @@ import styles from './AddOffer.module.scss';
 
 const Component = ({className, children}) => (
   <div className={clsx(className, styles.root)}>
-    <h2>AddOffer</h2>
+    <h2 className={styles.title}>AddOffer</h2>
     {children}
   </div>
 );
