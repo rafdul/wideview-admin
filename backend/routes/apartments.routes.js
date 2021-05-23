@@ -5,7 +5,7 @@ const Apartment = require('../models/apartment.model');
 router.get('/offers', async (req, res) => {
   try {
     const result = await Apartment.find();
-    console.log('offers:', result);
+    // console.log('offers:', result);
     if(!result) res.status(404).json({ offers: 'Not found'});
     else res.json(result);
   }

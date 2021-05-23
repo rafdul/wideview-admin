@@ -1,8 +1,11 @@
+import Axios from 'axios';
+import { API_URL } from '../config';
+
 /* selectors */
-export const getAll = ({posts}) => posts.data;
+export const getAllApartments = ({apartments}) => apartments.data;
 
 /* action name creator */
-const reducerName = 'posts';
+const reducerName = 'apartments';
 const createActionName = name => `app/${reducerName}/${name}`;
 
 /* action types */
@@ -16,6 +19,24 @@ export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 
 /* thunk creators */
+export const fetchAllApartments = () => {
+  return (dispatch, getState) => {
+    const { apartments } = getState();
+
+    if(apartments.data.length === 0 && apartments.loading.active === false) {
+      dispatch(fetchStarted());
+
+      Axios
+        .get(`${API_URL}/offers`)
+        .then(res => {
+          dispatch(fetchSuccess(res.data));
+        })
+        .catch(err => {
+          dispatch(fetchError(err.message || true));
+        });
+    }
+  };
+};
 
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {

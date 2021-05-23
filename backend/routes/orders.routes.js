@@ -5,7 +5,7 @@ const Order = require('../models/order.model');
 router.get('/orders', async (req, res) => {
   try {
     const result = await Order.find();
-    console.log('orders', result);
+    // console.log('orders', result);
     if(!result) res.status(404).json({ orders: 'Not found'});
     else res.json(result);
   }
