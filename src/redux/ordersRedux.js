@@ -3,7 +3,7 @@ import { API_URL } from '../config';
 
 /* selectors */
 export const getAllOrders = ({orders}) => orders.data;
-export const getFiveOrders = ({orders}) => orders.data.slice(0,4);
+export const getFiveOrders = ({orders}) => orders.data.slice(0,5);
 
 /* action name creator */
 const reducerName = 'orders';

@@ -5,4 +5,39 @@
   .title {
     @include titleOfPage;
   }
+
+  .headContainer {
+    display: flex;
+    justify-content: space-between;
+
+    .search {
+      display: flex;
+      justify-content: center;
+      border: 1px solid $color-text-grey;
+      border-radius: 4px;
+      margin: $main-spacing/2;
+
+      &__icon {
+        margin: auto $main-spacing/2;
+        color: $color-text-grey;
+      }
+    }
+
+    .btnContainer {
+      text-align: right;
+    }
+  }
+
+  .btn__more {
+    a {
+      color: $color-primary;
+    }
+  }
+
+  @media(max-width: 380px) {
+    .headContainer {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
 }

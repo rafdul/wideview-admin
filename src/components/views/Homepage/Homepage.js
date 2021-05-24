@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+
+import { Btn } from '../../common/Btn/Btn';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -59,10 +59,8 @@ class Component extends React.Component {
                           <TableCell component="th" scope="row">{order.dataSubmited.slice(0,10)}</TableCell>
                           <TableCell align="right">{order.idSubmited}</TableCell>
                           <TableCell align="right">{order.email}</TableCell>
-                          <TableCell align="right">
-                            <Button variant="outlined" color="primary" className={styles.btnContainer__item + ' ' + styles.btnContainer__more}>
-                              <Link to={`/orders/${order._id}`}>More</Link>
-                            </Button>
+                          <TableCell align="right" className={styles.btn__more}>
+                            <Btn variant='outlined' color='primary' link={`/orders/${order._id}`} text='More' />
                           </TableCell>
                         </TableRow>
                       ))}
@@ -70,9 +68,7 @@ class Component extends React.Component {
                   </Table>
                 </TableContainer>
                 <div className={styles.btnContainer}>
-                  <Button variant="contained" color="primary" className={styles.btnContainer__item}>
-                    <Link to={'/orders'}>View all orders</Link>
-                  </Button>
+                  <Btn variant='contained' color='primary' link='/orders' text='View all orders' />
                 </div>
               </Paper>
             </Grid>
@@ -97,10 +93,8 @@ class Component extends React.Component {
                           <TableCell align="right">{offer.city}</TableCell>
                           <TableCell align="right">{offer.category}</TableCell>
                           <TableCell align="right">{offer.price}</TableCell>
-                          <TableCell align="right">
-                            <Button variant="outlined" color="primary" className={styles.btnContainer__item + ' ' + styles.btnContainer__more}>
-                              <Link to={`/offers/${offer._id}`}>More</Link>
-                            </Button>
+                          <TableCell align="right" className={styles.btn__more}>
+                            <Btn variant='outlined' color='primary' link={`/offers/${offer._id}`} text='More' />
                           </TableCell>
                         </TableRow>
                       ))}
@@ -108,12 +102,8 @@ class Component extends React.Component {
                   </Table>
                 </TableContainer>
                 <div className={styles.btnContainer}>
-                  <Button variant="contained" color="primary" className={styles.btnContainer__item}>
-                    <Link to={'/offers'}>View all offers</Link>
-                  </Button>
-                  <Button variant="contained" color="secondary" className={styles.btnContainer__item}>
-                    <Link to={'/offers/add'}>Add new offer</Link>
-                  </Button>
+                  <Btn variant='contained' color='primary' link={`/offers`} text='View all offers' />
+                  <Btn variant='contained' color='secondary' link={`/offers/add`} text='Add new offer' />
                 </div>
               </Paper>
             </Grid>
