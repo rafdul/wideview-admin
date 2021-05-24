@@ -5,6 +5,7 @@ export const initialState = {
       active: false,
       error: false,
     },
+    oneOffer: {},
   },
 
   orders: {

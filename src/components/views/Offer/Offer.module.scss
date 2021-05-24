@@ -1,4 +1,36 @@
 @import '../../../styles/settings.scss';
+@import '../../../styles/mixins.scss';
 
-// .root {
-// }
+.root {
+  .title {
+    @include titleOfPage;
+  }
+
+  .box {
+    margin: $main-spacing/2;
+
+    &__item {
+      padding: $main-spacing/2 $main-spacing;
+    }
+
+    &__text {
+      font-weight: 600;
+    }
+  }
+
+  .imageContainer {
+    display: flex;
+    justify-content: space-between;
+
+    .image {
+      // margin: $main-spacing/2;
+      max-height: 170px;
+      max-width: 300px;
+
+      &__item {
+
+      }
+
+    }
+  }
+}

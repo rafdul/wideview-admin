@@ -40,7 +40,7 @@ class Component extends React.Component {
   handleChangePage = (event, newPage) => {
     this.setState({page: newPage});
   };
-  
+
   render() {
     const { className, loading, allOrders } = this.props;
     const { page, rowsPerPage } = this.state;

@@ -63,7 +63,7 @@ class Component extends React.Component {
     );
 
     let repository = '';
-    if(searchPhrase == undefined || searchPhrase == '' || searchPhrase == null) {
+    if(searchPhrase === undefined || searchPhrase === '' || searchPhrase === null) {
       repository = allApartments;
     } else {
       repository = offersAfterSearching;

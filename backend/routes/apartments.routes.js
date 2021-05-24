@@ -17,7 +17,7 @@ router.get('/offers', async (req, res) => {
 router.get('/offers/:id', async (req, res) => {
   try {
     const result = await Apartment.findById(req.params.id);
-    // console.log(req);
+    console.log(req.params);
     if(!result) res.status(404).json({ offers: 'Not found'});
     else res.json(result);
   }
