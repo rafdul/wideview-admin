@@ -52,8 +52,8 @@ class Component extends React.Component {
   render() {
     const { className, allApartments, loading } = this.props;
     const { page, rowsPerPage, searchPhrase } = this.state;
-    console.log('allApartments', allApartments);
-    console.log('searchPhrase', searchPhrase);
+    // console.log('allApartments', allApartments);
+    // console.log('searchPhrase', searchPhrase);
 
     const offersAfterSearching = allApartments.filter(
       item =>
@@ -61,16 +61,13 @@ class Component extends React.Component {
         item.city.indexOf(searchPhrase) >= 0 ||
         item.category.indexOf(searchPhrase) >= 0
     );
-    console.log('offersAfterSearching', offersAfterSearching);
 
     let repository = '';
-    console.log('repository1', repository);
     if(searchPhrase == undefined || searchPhrase == '' || searchPhrase == null) {
       repository = allApartments;
     } else {
       repository = offersAfterSearching;
     }
-    console.log('repository2', repository);
 
     if(loading && loading.active === true) {
       return(
