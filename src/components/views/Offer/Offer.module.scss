@@ -6,11 +6,40 @@
     @include titleOfPage;
   }
 
+  .grid {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: auto auto auto;
+    grid-gap: $base-size/2;
+    padding-right: $base-size;
+
+    &__item1 {
+      grid-column: 1/2;
+      grid-row: 1/2;
+    }
+
+    &__item2 {
+      grid-column: 1/2;
+      grid-row: 2/3;
+    }
+
+    &__item3 {
+      grid-column: 1/2;
+      grid-row: 3/4;
+    }
+
+    &__item4 {
+      grid-column: 2/3;
+      grid-row: 1/ span 4;
+    }
+  }
+
   .box {
     margin: $main-spacing/2;
 
     &__item {
       padding: $main-spacing/2 $main-spacing;
+      word-wrap: break-word;
     }
 
     &__text {
@@ -20,17 +49,33 @@
 
   .imageContainer {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    flex-direction: column;
 
     .image {
-      // margin: $main-spacing/2;
-      max-height: 170px;
-      max-width: 300px;
+      margin: $main-spacing/2;
+      height: 220px;
+      width: 100%;
 
       &__item {
-
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 4px;
       }
+    }
+  }
 
+  @media(max-width: 600px) {
+    .grid {
+      grid-template-columns: 100%;
+      grid-template-rows: auto auto auto auto;
+      grid-gap: $base-size/2;
+
+      &__item4 {
+        grid-column: 1/2;
+        grid-row: 4/5;
+      }
     }
   }
 }
