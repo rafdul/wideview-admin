@@ -16,5 +16,6 @@ export const initialState = {
       added: false,
       done: false,
     },
+    oneOrder: {},
   },
 };

@@ -1,4 +1,31 @@
 @import '../../../styles/settings.scss';
+@import '../../../styles/mixins.scss';
 
-// .root {
-// }
+.root {
+  .title {
+    @include titleOfPage;
+  }
+
+  .containerFlex {
+    flex-wrap: nowrap;
+
+    .box {
+      margin: $main-spacing/2;
+
+      &__item {
+        padding: $main-spacing/2 $main-spacing;
+        word-wrap: break-word;
+      }
+
+      &__text {
+        font-weight: 600;
+      }
+    }
+  }
+
+  @media(max-width: 850px) {
+    .containerFlex {
+      flex-wrap: wrap;
+    }
+  }
+}
