@@ -5,4 +5,8 @@
   .title {
     @include titleOfPage;
   }
+
+  .formContainer {
+    padding: $main-spacing;
+  }
 }

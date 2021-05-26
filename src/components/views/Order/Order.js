@@ -53,7 +53,7 @@ class Component extends React.Component {
             </Grid>
             {oneOrder.apartments && oneOrder.apartments.map(item => (
               <Grid item xs={12} md={6} key={item._id}>
-                <Paper className={styles.box}>
+                <Paper className={styles.box + ' ' + styles.background}>
                   <h5>Booking: {item.idOrder}</h5>
                   <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>Name:</span> {item.name}</Typography>
                   <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>City:</span> {item.city}</Typography>

@@ -16,12 +16,14 @@ const FETCH_START = createActionName('FETCH_START');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const FETCH_ONE = createActionName('FETCH_ONE');
+const FETCH_ADD_ONE = createActionName('FETCH_ADD_ONE');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const fetchOne = payload => ({ payload, type: FETCH_ONE });
+export const fetchAddOne = payload => ({ payload, type: FETCH_ADD_ONE });
 
 /* thunk creators */
 export const fetchAllApartments = () => {
@@ -51,6 +53,21 @@ export const fetchOneApartments = (id) => {
       .get(`${API_URL}/offers/${id}`)
       .then(res => {
         dispatch(fetchOne(res.data));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const fetchAddOneApartments = (offer) => {
+  return (dispatch, getState) => {
+    dispatch(fetchStarted());
+
+    Axios
+      .post(`${API_URL}/offers/add`, offer)
+      .then(res => {
+        dispatch(fetchAddOne(offer));
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
@@ -97,6 +114,16 @@ export const reducer = (statePart = [], action = {}) => {
           error: false,
         },
         oneOffer: action.payload,
+      };
+    }
+    case FETCH_ADD_ONE: {
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+        },
+        data: [...statePart.data, action.payload],
       };
     }
     default:

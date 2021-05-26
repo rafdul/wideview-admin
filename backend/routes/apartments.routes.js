@@ -26,4 +26,18 @@ router.get('/offers/:id', async (req, res) => {
   }
 });
 
+router.post('/offers/add', async (req,res) => {
+  try {
+    // console.log('req.body', req.body);
+    // const {} = req.body;
+
+    // const newOrder = new Apartment({});
+    // await newOrder.save();
+    // res.json(newOrder);
+  }
+  catch(err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
