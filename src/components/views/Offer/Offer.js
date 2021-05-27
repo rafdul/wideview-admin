@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Loading } from '../../common/Loading/Loading';
 import { Error } from '../../common/Error/Error';
+import {Btn} from '../../common/Btn/Btn';
 
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -61,6 +62,9 @@ class Component extends React.Component {
               <Typography variant="caption" component="div" className={styles.box__item}><span className={styles.box__text}>Location lng:</span> {oneOffer.location === undefined ? 0 : oneOffer.location.lng}</Typography>
               <Typography variant="caption" component="div" className={styles.box__item}><span className={styles.box__text}>Google map iframe:</span> {oneOffer.map}</Typography>
             </Paper>
+            <Grid item align="center" className={styles.grid__item5}>
+              <Btn variant='contained' color='primary' link={`/offers/${oneOffer._id}/edit`} text='Edit' />
+            </Grid>
             <div className={styles.imageContainer + ' ' + styles.grid__item4}>
               {oneOffer.image && oneOffer.image.map(item => (
                 <div key={oneOffer.image.indexOf(item)} className={styles.image}>

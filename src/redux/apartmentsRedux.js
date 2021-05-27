@@ -16,6 +16,7 @@ const FETCH_START = createActionName('FETCH_START');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const FETCH_ONE = createActionName('FETCH_ONE');
+const FETCH_EMPTY_ONE = createActionName('FETCH_EMPTY_ONE');
 const FETCH_ADD_ONE = createActionName('FETCH_ADD_ONE');
 
 /* action creators */
@@ -23,6 +24,7 @@ export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const fetchOne = payload => ({ payload, type: FETCH_ONE });
+export const fetchEmptyOne = payload => ({ payload, type: FETCH_EMPTY_ONE });
 export const fetchAddOne = payload => ({ payload, type: FETCH_ADD_ONE });
 
 /* thunk creators */
@@ -68,6 +70,7 @@ export const fetchAddOneApartments = (offer) => {
       .post(`${API_URL}/offers/add`, offer)
       .then(res => {
         dispatch(fetchAddOne(offer));
+        console.log('offer w axios:', offer);
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
@@ -116,7 +119,20 @@ export const reducer = (statePart = [], action = {}) => {
         oneOffer: action.payload,
       };
     }
+    case FETCH_EMPTY_ONE: {
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+        },
+        oneOffer: {},
+      };
+    }
     case FETCH_ADD_ONE: {
+      console.log('action.payload w reducer:', action.payload);
+      console.log('statePart.data:', statePart.data);
+
       return {
         ...statePart,
         loading: {

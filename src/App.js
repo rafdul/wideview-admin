@@ -13,7 +13,7 @@ import { Orders } from './components/views/Orders/Orders';
 import { Order } from './components/views/Order/Order';
 import { Offers } from './components/views/Offers/Offers';
 import { Offer } from './components/views/Offer/Offer';
-import { AddOffer } from './components/views/AddOffer/AddOffer';
+import { Form } from './components/views/Form/Form';
 import { NotFound } from './components/views/NotFound/NotFound';
 
 const theme = createMuiTheme({
@@ -34,8 +34,9 @@ const App = () => (
               <Route exact path='/orders' component={Orders} />
               <Route exact path='/orders/:id' component={Order} />
               <Route exact path='/offers' component={Offers} />
-              <Route exact path='/offers/add' component={AddOffer} />
+              <Route exact path='/offers/add' render={() => <Form isNewAnnounce={true}/>} />
               <Route exact path='/offers/:id' component={Offer} />
+              <Route exact path='/offers/:id/edit' render={() => <Form isNewAnnounce={false}/>} />
               <Route path='*' component={NotFound} />
             </Switch>
           </MainLayout>

@@ -18,35 +18,89 @@ import * as Yup from 'yup';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { fetchAddOneApartments } from '../../../redux/apartmentsRedux.js';
+import { getOneOffer, fetchAddOneApartments, fetchEmptyOne } from '../../../redux/apartmentsRedux.js';
 
-import styles from './AddOffer.module.scss';
+import styles from './Form.module.scss';
 
 class Component extends React.Component {
 
+  state = {
+    offer: {
+      _id: this.props.isNewAnnounce ? '' : this.props.oneOffer._id,
+      name: this.props.isNewAnnounce ? '' : this.props.oneOffer.name,
+      city: this.props.isNewAnnounce ? '' : this.props.oneOffer.city,
+      category: this.props.isNewAnnounce ? '' : this.props.oneOffer.category,
+      description: this.props.isNewAnnounce ? '' : this.props.oneOffer.description,
+      price: this.props.isNewAnnounce ? '' : this.props.oneOffer.price,
+      bedrooms: this.props.isNewAnnounce ? '' : this.props.oneOffer.bedrooms,
+      kitchen: this.props.isNewAnnounce ? '' : this.props.oneOffer.kitchen,
+      balcony: this.props.isNewAnnounce ? '' : this.props.oneOffer.balcony,
+      swimpool: this.props.isNewAnnounce ? '' : this.props.oneOffer.swimpool,
+      location: this.props.isNewAnnounce ? '' : this.props.oneOffer.location,
+      map: this.props.isNewAnnounce ? '' : this.props.oneOffer.map,
+      image: this.props.isNewAnnounce ? '' : this.props.oneOffer.image,
+    },
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if(this.props.isNewAnnounce && this.props.isNewAnnounce !== prevProps.isNewAnnounce) {
+      console.log('prevProps', prevProps);
+      console.log('prevState', prevState);
+
+      const {fetchEmptyOne} = this.props;
+      fetchEmptyOne();
+
+      this.setState({
+        offer: {
+          _id: '',
+          name: '',
+          city: '',
+          category: '',
+          description: '',
+          price: '',
+          bedrooms: '',
+          kitchen: '',
+          balcony: '',
+          swimpool: '',
+          location: '',
+          map: '',
+          image: '',
+        },
+      });
+    }
+  }
+
   render() {
-    const {className, addOneOffer} = this.props;
+    const {className, addOneOffer, isNewAnnounce, oneOffer} = this.props;
+    const {offer} = this.state;
+
+    console.log('isNewAnnounce', isNewAnnounce);
+    console.log('oneOffer', oneOffer);
+    console.log('offer', offer);
+
+
 
     return(
-      <div className={clsx(className, styles.root)}>
-        <h2 className={styles.title}>Add offer</h2>
+      <div className={clsx(className, styles.root)} >
+        <h2 className={styles.title}>{isNewAnnounce ? 'Add offer' : 'Edit offer'}</h2>
         <Grid container spacing={3} justify="center">
           <Grid item xs={12} sm={9}>
             <Paper>
               <Formik
+                enableReinitialize
                 initialValues={{
-                  name: '',
-                  city: '',
-                  category: '',
-                  description: '',
-                  price: '',
-                  bedrooms: '',
-                  kitchen: '',
-                  balcony: '',
-                  swimpool: '',
-                  locationLat: '',
-                  locationLng: '',
-                  map: '',
+                  name: offer.name,
+                  city: offer.city,
+                  category: offer.category,
+                  description: offer.description,
+                  price: offer.price,
+                  bedrooms: offer.bedrooms,
+                  kitchen: offer.kitchen,
+                  balcony: offer.balcony,
+                  swimpool: offer.swimpool,
+                  locationLat: isNewAnnounce ? '' : (oneOffer.location === undefined ? 0 : oneOffer.location.lat),
+                  locationLng: isNewAnnounce ? '' : (oneOffer.location === undefined ? 0 : oneOffer.location.lng),
+                  map: offer.map,
                 }}
                 onSubmit={values => {
                   console.log('values', values);
@@ -67,9 +121,8 @@ class Component extends React.Component {
                   map: Yup.string(),
                 })}
               >
-
                 {({handleChange, errors, touched, values}) => (
-                  <Form>
+                  <Form >
                     <Grid container spacing={3} justify="center" className={styles.formContainer}>
                       <Grid item xs={12} sm={9}>
                         <TextField
@@ -280,19 +333,24 @@ class Component extends React.Component {
 Component.propTypes = {
   className: PropTypes.string,
   addOneOffer: PropTypes.func,
+  isNewAnnounce: PropTypes.bool,
+  oneOffer: PropTypes.object,
+  fetchEmptyOne: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
+  oneOffer: getOneOffer(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   addOneOffer: offer => dispatch(fetchAddOneApartments(offer)),
+  fetchEmptyOne: arg => dispatch(fetchEmptyOne(arg)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  // Component as AddOffer,
-  Container as AddOffer,
-  Component as AddOfferComponent,
+  // Component as Form,
+  Container as Form,
+  Component as FormComponent,
 };

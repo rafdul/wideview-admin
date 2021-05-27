@@ -28,12 +28,13 @@ router.get('/offers/:id', async (req, res) => {
 
 router.post('/offers/add', async (req,res) => {
   try {
-    // console.log('req.body', req.body);
-    // const {} = req.body;
+    console.log('req.body', req.body);
+    const {name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, locationLat, locationLng, map } = req.body;
 
-    // const newOrder = new Apartment({});
-    // await newOrder.save();
-    // res.json(newOrder);
+    const newOrder = new Apartment({name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, location: {lat: locationLat, lng: locationLng}, map});
+    await newOrder.save();
+    res.json(newOrder);
+    console.log('newOrder', newOrder);
   }
   catch(err) {
     res.status(500).json(err);
