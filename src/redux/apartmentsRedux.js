@@ -18,6 +18,7 @@ const FETCH_ERROR = createActionName('FETCH_ERROR');
 const FETCH_ONE = createActionName('FETCH_ONE');
 const FETCH_EMPTY_ONE = createActionName('FETCH_EMPTY_ONE');
 const FETCH_ADD_ONE = createActionName('FETCH_ADD_ONE');
+const FETCH_EDIT_ONE = createActionName('FETCH_EDIT_ONE');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
@@ -26,6 +27,7 @@ export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const fetchOne = payload => ({ payload, type: FETCH_ONE });
 export const fetchEmptyOne = payload => ({ payload, type: FETCH_EMPTY_ONE });
 export const fetchAddOne = payload => ({ payload, type: FETCH_ADD_ONE });
+export const fetchEditOne = payload => ({ payload, type: FETCH_EDIT_ONE });
 
 /* thunk creators */
 export const fetchAllApartments = () => {
@@ -78,6 +80,21 @@ export const fetchAddOneApartments = (offer) => {
   };
 };
 
+export const fetchEditApartments = (offer, id) => {
+  return(dispatch, getState) => {
+    dispatch(fetchStarted());
+
+    Axios
+      .put(`${API_URL}/offers/${id}/edit`, offer)
+      .then(res => {
+        dispatch(fetchEditOne(offer));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
   switch (action.type) {
@@ -96,6 +113,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
+          added: false,
         },
         data: action.payload,
       };
@@ -130,16 +148,33 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_ADD_ONE: {
-      console.log('action.payload w reducer:', action.payload);
-      console.log('statePart.data:', statePart.data);
+      console.log('action.payload w reducer addone:', action.payload);
+      console.log('statePart.data w reducer addone:', statePart.data);
 
       return {
         ...statePart,
         loading: {
           active: false,
           error: false,
+          added: true,
         },
         data: [...statePart.data, action.payload],
+      };
+    }
+    case FETCH_EDIT_ONE: {
+      const statePartIndex = statePart.data.findIndex(offer => offer._id === action.payload._id);
+      statePart.data.splice(statePartIndex, 1, action.payload);
+      console.log('action.payload w reducer edit:', action.payload);
+      console.log('statePart.data w reducer edit:', statePart.data);
+
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+          added: true,
+        },
+        data: [...statePart.data],
       };
     }
     default:

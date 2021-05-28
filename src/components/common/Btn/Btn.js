@@ -7,12 +7,15 @@ import Button from '@material-ui/core/Button';
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-import styles from './Button.module.scss';
+import styles from './Btn.module.scss';
 
 const Component = ({color, link, text, variant}) => (
-  <Button variant={variant} color={color} className={styles.btn__item}>
-    <Link to={link}>{text}</Link>
-  </Button>
+  <Link to={link} className={styles.btn__link}>
+    <Button variant={variant} color={color} className={styles.btn__item}>
+      {text}
+      {/* <Link to={link}>{text}</Link> */}
+    </Button>
+  </Link>
 );
 
 Component.propTypes = {

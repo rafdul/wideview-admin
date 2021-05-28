@@ -41,4 +41,24 @@ router.post('/offers/add', async (req,res) => {
   }
 });
 
+router.put('/offers/:id/edit', async (req, res) => {
+  try {
+    console.log('req.body edit', req.body);
+    const {name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, locationLat, locationLng, map } = req.body;
+
+    const editedOffer = await Apartment.findById(req.body._id);
+    console.log('editedOffer', editedOffer);
+    if(editedOffer) {
+      const changedOffer = await Apartment.updateOne({_id: req.body._id}, {$set: {name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, location: {lat: locationLat, lng: locationLng}, map}});
+      res.json(changedOffer);
+    }
+    else {
+      throw new Error('Something wrong!');
+    }
+  }
+  catch(err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

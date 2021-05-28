@@ -1,0 +1,13 @@
+@import '../../../styles/settings.scss';
+
+
+.btn__link {
+  color: #ffffff;
+  text-decoration: none;
+
+  .btn__item {
+    margin: $base-size/2;
+  }
+}
+
+
