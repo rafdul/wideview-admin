@@ -13,7 +13,6 @@ const Component = ({color, link, text, variant}) => (
   <Link to={link} className={styles.btn__link}>
     <Button variant={variant} color={color} className={styles.btn__item}>
       {text}
-      {/* <Link to={link}>{text}</Link> */}
     </Button>
   </Link>
 );

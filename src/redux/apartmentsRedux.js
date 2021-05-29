@@ -19,6 +19,7 @@ const FETCH_ONE = createActionName('FETCH_ONE');
 const FETCH_EMPTY_ONE = createActionName('FETCH_EMPTY_ONE');
 const FETCH_ADD_ONE = createActionName('FETCH_ADD_ONE');
 const FETCH_EDIT_ONE = createActionName('FETCH_EDIT_ONE');
+const FETCH_DELETE_ONE = createActionName('FETCH_DELETE_ONE');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
@@ -28,6 +29,7 @@ export const fetchOne = payload => ({ payload, type: FETCH_ONE });
 export const fetchEmptyOne = payload => ({ payload, type: FETCH_EMPTY_ONE });
 export const fetchAddOne = payload => ({ payload, type: FETCH_ADD_ONE });
 export const fetchEditOne = payload => ({ payload, type: FETCH_EDIT_ONE });
+export const fetchDeleteOne = payload => ({ payload, type: FETCH_DELETE_ONE });
 
 /* thunk creators */
 export const fetchAllApartments = () => {
@@ -89,6 +91,24 @@ export const fetchEditApartments = (offer, id) => {
       .then(res => {
         dispatch(fetchEditOne(offer));
       })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const fetchDeleteApartments = (offer) => {
+  return(dispatch, getState) => {
+    console.log('offer', offer);
+    // dispatch(fetchStarted());
+    dispatch(fetchDeleteOne(offer));
+
+    Axios
+      .delete(`${API_URL}/offers/delete`, {data: {_id: offer._id}})
+      // .then(res => {
+      //   dispatch(fetchDeleteOne(offer));
+      //   console.log('offer', offer);
+      // })
       .catch(err => {
         dispatch(fetchError(err.message || true));
       });
@@ -175,6 +195,22 @@ export const reducer = (statePart = [], action = {}) => {
           added: true,
         },
         data: [...statePart.data],
+      };
+    }
+    case FETCH_DELETE_ONE: {
+      // const statePartIndex = statePart.data.findIndex(offer => offer._id === action.payload._id);
+      // statePart.data.splice(statePartIndex, 1);
+      console.log('action.payload w reducer edit:', action.payload);
+      console.log('statePart.data w reducer edit:', statePart.data);
+
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+          added: false,
+        },
+        data: statePart.data.filter(offer => offer._id !== action.payload._id),
       };
     }
     default:

@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { getOneOffer, getLoadingApartments, fetchOneApartments } from '../../../redux/apartmentsRedux.js';
+import { getOneOffer, getLoadingApartments, fetchOneApartments, fetchDeleteApartments } from '../../../redux/apartmentsRedux.js';
 
 import styles from './Offer.module.scss';
 
@@ -23,8 +23,16 @@ class Component extends React.Component {
     fetchOneOffer();
   }
 
+  deleteOffer(offer) {
+
+    console.log('click delete');
+    const {fetchDeleteOneOffer} = this.props;
+    console.log('fetchDeleteOneOffer', fetchDeleteOneOffer);
+    fetchDeleteOneOffer(offer);
+  }
+
   render() {
-    const {className, oneOffer, loading} = this.props;
+    const {className, oneOffer, loading, fetchDeleteOneOffer} = this.props;
     console.log('oneOffer', oneOffer);
     // const location = oneOffer.location;
     // console.log('location.lng', location.lng);
@@ -63,6 +71,12 @@ class Component extends React.Component {
               <Typography variant="caption" component="div" className={styles.box__item}><span className={styles.box__text}>Google map iframe:</span> {oneOffer.map}</Typography>
             </Paper>
             <Grid item align="center" className={styles.grid__item5}>
+              <div onClick={() => fetchDeleteOneOffer(oneOffer)}>
+                <button type="submit" >Click Me!</button>
+              </div>
+
+
+              <Btn variant='outlined' color='secondary' link={'#'} text='Delete' />
               <Btn variant='contained' color='primary' link={`/offers/${oneOffer._id}/edit`} text='Edit' />
             </Grid>
             <div className={styles.imageContainer + ' ' + styles.grid__item4}>
@@ -88,6 +102,7 @@ Component.propTypes = {
   className: PropTypes.string,
   oneOffer: PropTypes.object,
   loading: PropTypes.object,
+  fetchDeleteOneOffer: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -97,6 +112,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
   fetchOneOffer: () => dispatch(fetchOneApartments(props.match.params.id)),
+  fetchDeleteOneOffer: (offer) => dispatch(fetchDeleteApartments(offer)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
