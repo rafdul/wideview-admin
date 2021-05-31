@@ -352,7 +352,6 @@ class Component extends React.Component {
                               onChange={event => {
                                 setFieldValue('image', event);
                                 console.log('event', event);
-                                console.log('event', values.image.concat(event));
                               }}
                               className={styles.file}
                             />

@@ -7,7 +7,7 @@ const multer = require('multer');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../uploads'));
+    cb(null, path.join(__dirname, '../../public/images/offers'));
   },
   filename: function (req, file, cb) {
     let nameImage = Date.now() + '-wideviev-' + file.originalname;
@@ -49,13 +49,14 @@ router.post('/offers/add', upload.array('image', 3), async (req,res) => {
     console.log('req.body:', req.body);
     console.log('req.file:', req.file);
     console.log('req.files:', req.files);
-    // console.log('req.file.filename:', req.file.filename);
-    // console.log('req.files.filename:', req.files.filename);
-    console.log('req.body.image:', req.body.image);
 
     const {name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, locationLat, locationLng, map } = req.body;
 
-    const newOrder = new Apartment({name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, location: {lat: locationLat, lng: locationLng}, map});
+    const arrayNameImage = [];
+    req.files.map(el => arrayNameImage.push('/images/offers/' + el.filename));
+    console.log('arrayNameImage', arrayNameImage);
+
+    const newOrder = new Apartment({name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, location: {lat: locationLat, lng: locationLng}, map, image: arrayNameImage});
     await newOrder.save();
     res.json(newOrder);
     console.log('newOrder', newOrder);
