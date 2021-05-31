@@ -1,0 +1,12 @@
+@import '../../../styles/settings.scss';
+@import '../../../styles/mixins.scss';
+
+.root {
+  .title {
+    @include titleOfPage;
+  }
+
+  .formContainer {
+    padding: $main-spacing;
+  }
+}

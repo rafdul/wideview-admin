@@ -23,7 +23,7 @@ import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { getOneOffer, getLoadingApartments, fetchAddOneApartments, fetchEmptyOne, fetchEditApartments } from '../../../redux/apartmentsRedux.js';
 
-import styles from './Form.module.scss';
+import styles from './FormOffer.module.scss';
 
 class Component extends React.Component {
 
@@ -401,7 +401,7 @@ const mapDispatchToProps = dispatch => ({
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  // Component as Form,
-  Container as Form,
-  Component as FormComponent,
+  // Component as FormOffer,
+  Container as FormOffer,
+  Component as FormOfferComponent,
 };

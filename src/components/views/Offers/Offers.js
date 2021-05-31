@@ -55,20 +55,6 @@ class Component extends React.Component {
     // console.log('allApartments', allApartments);
     // console.log('searchPhrase', searchPhrase);
 
-    // const offersAfterSearching = allApartments.filter(
-    //   item =>
-    //     item.name.indexOf(searchPhrase) >= 0 ||
-    //     item.city.indexOf(searchPhrase) >= 0 ||
-    //     item.category.indexOf(searchPhrase) >= 0
-    // );
-
-    // let repository = '';
-    // if(searchPhrase === undefined || searchPhrase === '' || searchPhrase === null) {
-    //   repository = allApartments;
-    // } else {
-    //   repository = offersAfterSearching;
-    // }
-
     let repository = '';
     if(searchPhrase === undefined || searchPhrase === '' || searchPhrase === null) {
       repository = allApartments;
