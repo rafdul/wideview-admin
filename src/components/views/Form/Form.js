@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
+import uniqid from 'uniqid';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
@@ -67,6 +68,7 @@ class Component extends React.Component {
           location: '',
           map: '',
           image: '',
+          id: '',
         },
       });
     }
@@ -110,12 +112,14 @@ class Component extends React.Component {
                       locationLng: isNewAnnounce ? '' : (oneOffer.location === undefined ? 0 : oneOffer.location.lng),
                       map: offer.map,
                       image: offer.image,
+                      id: offer.id,
                     }}
                     onSubmit={values => {
                       console.log('values', values);
                       if(isNewAnnounce) {
+                        values.id = uniqid('offer-');
                         const formData = new FormData();
-                        for (let key of ['name','city', 'category', 'description', 'price', 'bedrooms', 'kitchen', 'balcony', 'swimpool', 'locationLat', 'locationLng', 'map']) {
+                        for (let key of ['id', 'name','city', 'category', 'description', 'price', 'bedrooms', 'kitchen', 'balcony', 'swimpool', 'locationLat', 'locationLng', 'map']) {
                           formData.append(key, values[key]);
                         }
                         console.log('values.image', values.image);

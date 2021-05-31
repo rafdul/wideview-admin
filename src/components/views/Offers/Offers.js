@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-
 
 import { Btn } from '../../common/Btn/Btn';
 import { Loading } from '../../common/Loading/Loading';
@@ -57,18 +55,30 @@ class Component extends React.Component {
     // console.log('allApartments', allApartments);
     // console.log('searchPhrase', searchPhrase);
 
-    const offersAfterSearching = allApartments.filter(
-      item =>
-        item.name.indexOf(searchPhrase) >= 0 ||
-        item.city.indexOf(searchPhrase) >= 0 ||
-        item.category.indexOf(searchPhrase) >= 0
-    );
+    // const offersAfterSearching = allApartments.filter(
+    //   item =>
+    //     item.name.indexOf(searchPhrase) >= 0 ||
+    //     item.city.indexOf(searchPhrase) >= 0 ||
+    //     item.category.indexOf(searchPhrase) >= 0
+    // );
+
+    // let repository = '';
+    // if(searchPhrase === undefined || searchPhrase === '' || searchPhrase === null) {
+    //   repository = allApartments;
+    // } else {
+    //   repository = offersAfterSearching;
+    // }
 
     let repository = '';
     if(searchPhrase === undefined || searchPhrase === '' || searchPhrase === null) {
       repository = allApartments;
     } else {
-      repository = offersAfterSearching;
+      repository = allApartments.filter(
+        item =>
+          item.name.indexOf(searchPhrase) >= 0 ||
+          item.city.indexOf(searchPhrase) >= 0 ||
+          item.category.indexOf(searchPhrase) >= 0
+      );
     }
 
     if(loading && loading.active === true) {
@@ -115,14 +125,14 @@ class Component extends React.Component {
                 </TableHead>
                 <TableBody className={styles.table__body}>
                   {repository && repository.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(offer => (
-                    <TableRow key={offer._id}>
+                    <TableRow key={offer.id}>
                       <TableCell component="th" scope="row">{offer.name}</TableCell>
                       <TableCell align="right">{offer.city}</TableCell>
                       <TableCell align="right">{offer.category}</TableCell>
                       <TableCell align="right">{offer.price}</TableCell>
                       <TableCell align="right">{offer.bedrooms}</TableCell>
                       <TableCell align="right" className={styles.btn__more}>
-                        <Btn variant='outlined' color='primary' link={`/offers/${offer._id}`} text='More' />
+                        <Btn variant='outlined' color='primary' link={`/offers/${offer.id}`} text='More' />
                       </TableCell>
                     </TableRow>
                   ))}

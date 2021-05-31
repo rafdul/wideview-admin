@@ -59,6 +59,7 @@ export const fetchOneApartments = (id) => {
       .get(`${API_URL}/offers/${id}`)
       .then(res => {
         dispatch(fetchOne(res.data));
+        console.log('res.data:', res.data);
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
@@ -148,6 +149,7 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_ONE: {
+      console.log('action.payload w fetchone:', action.payload);
       return {
         ...statePart,
         loading: {

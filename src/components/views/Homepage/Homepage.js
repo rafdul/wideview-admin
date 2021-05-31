@@ -88,13 +88,13 @@ class Component extends React.Component {
                     </TableHead>
                     <TableBody className={styles.table__body}>
                       {fiveApartments && fiveApartments.map(offer => (
-                        <TableRow key={offer._id}>
+                        <TableRow key={offer.id}>
                           <TableCell component="th" scope="row">{offer.name}</TableCell>
                           <TableCell align="right">{offer.city}</TableCell>
                           <TableCell align="right">{offer.category}</TableCell>
                           <TableCell align="right">{offer.price}</TableCell>
                           <TableCell align="right" className={styles.btn__more}>
-                            <Btn variant='outlined' color='primary' link={`/offers/${offer._id}`} text='More' />
+                            <Btn variant='outlined' color='primary' link={`/offers/${offer.id}`} text='More' />
                           </TableCell>
                         </TableRow>
                       ))}

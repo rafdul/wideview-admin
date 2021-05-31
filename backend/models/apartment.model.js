@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const apartmentSchema = new mongoose.Schema({
+  id: { type: String },
   category: { type: String, required: true },
   name: { type: String, required: true },
   city: { type: String, required: true },

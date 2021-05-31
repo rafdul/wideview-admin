@@ -13,7 +13,7 @@ var storage = multer.diskStorage({
     let nameImage = Date.now() + '-wideviev-' + file.originalname;
     console.log('file:', file);
     cb(null, nameImage);
-    console.log('nameImage:', nameImage);
+    // console.log('nameImage:', nameImage);
   },
 });
 let upload = multer({ storage });
@@ -32,10 +32,11 @@ router.get('/offers', async (req, res) => {
 });
 
 router.get('/offers/:id', async (req, res) => {
+  console.log('req.body:', req.body);
   try {
-    const result = await Apartment.findById(req.params.id);
+    const result = await Apartment.findOne({id: req.params.id});
     console.log('req.params w get/id:', req.params);
-    console.log('req.body._id:', req.body._id);
+    console.log('req.body:', req.body);
     if(!result) res.status(404).json({ offers: 'Not found'});
     else res.json(result);
   }
@@ -50,13 +51,13 @@ router.post('/offers/add', upload.array('image', 3), async (req,res) => {
     console.log('req.file:', req.file);
     console.log('req.files:', req.files);
 
-    const {name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, locationLat, locationLng, map } = req.body;
+    const {id, name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, locationLat, locationLng, map } = req.body;
 
     const arrayNameImage = [];
     req.files.map(el => arrayNameImage.push('/images/offers/' + el.filename));
     console.log('arrayNameImage', arrayNameImage);
 
-    const newOrder = new Apartment({name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, location: {lat: locationLat, lng: locationLng}, map, image: arrayNameImage});
+    const newOrder = new Apartment({id, name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, location: {lat: locationLat, lng: locationLng}, map, image: arrayNameImage});
     await newOrder.save();
     res.json(newOrder);
     console.log('newOrder', newOrder);
