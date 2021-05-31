@@ -71,7 +71,7 @@ export const fetchAddOneApartments = (offer) => {
     dispatch(fetchStarted());
 
     Axios
-      .post(`${API_URL}/offers/add`, offer)
+      .post(`${API_URL}/offers/add`, offer, {headers: {'Content-Type': 'multipart/form-data'}})
       .then(res => {
         dispatch(fetchAddOne(offer));
         console.log('offer w axios:', offer);
@@ -169,7 +169,6 @@ export const reducer = (statePart = [], action = {}) => {
     }
     case FETCH_ADD_ONE: {
       console.log('action.payload w reducer addone:', action.payload);
-      console.log('statePart.data w reducer addone:', statePart.data);
 
       return {
         ...statePart,
@@ -185,7 +184,6 @@ export const reducer = (statePart = [], action = {}) => {
       const statePartIndex = statePart.data.findIndex(offer => offer._id === action.payload._id);
       statePart.data.splice(statePartIndex, 1, action.payload);
       console.log('action.payload w reducer edit:', action.payload);
-      console.log('statePart.data w reducer edit:', statePart.data);
 
       return {
         ...statePart,
@@ -201,7 +199,6 @@ export const reducer = (statePart = [], action = {}) => {
       // const statePartIndex = statePart.data.findIndex(offer => offer._id === action.payload._id);
       // statePart.data.splice(statePartIndex, 1);
       console.log('action.payload w reducer edit:', action.payload);
-      console.log('statePart.data w reducer edit:', statePart.data);
 
       return {
         ...statePart,
@@ -209,6 +206,7 @@ export const reducer = (statePart = [], action = {}) => {
           active: false,
           error: false,
           added: false,
+          deleted: true,
         },
         data: statePart.data.filter(offer => offer._id !== action.payload._id),
       };

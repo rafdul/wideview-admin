@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ImageUploader from 'react-images-upload';
 
 import {BtnSubmit} from '../../common/BtnSubmit/BtnSubmit';
 
@@ -11,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
+import Typography from '@material-ui/core/Typography';
 
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -107,11 +109,20 @@ class Component extends React.Component {
                       locationLat: isNewAnnounce ? '' : (oneOffer.location === undefined ? 0 : oneOffer.location.lat),
                       locationLng: isNewAnnounce ? '' : (oneOffer.location === undefined ? 0 : oneOffer.location.lng),
                       map: offer.map,
+                      image: offer.image,
                     }}
                     onSubmit={values => {
                       console.log('values', values);
                       if(isNewAnnounce) {
-                        addOneOffer(values);
+                        const formData = new FormData();
+                        for (let key of ['name','city', 'category', 'description', 'price', 'bedrooms', 'kitchen', 'balcony', 'swimpool', 'locationLat', 'locationLng', 'map']) {
+                          formData.append(key, values[key]);
+                        }
+                        console.log('values.image', values.image);
+                        values.image.map(el => formData.append('image', el));
+                        // formData.append('image', values.image);
+                        console.log(formData);
+                        addOneOffer(formData);
                       } else {
                         values._id = offer._id;
                         editOneOffer(values);
@@ -132,8 +143,8 @@ class Component extends React.Component {
                       map: Yup.string(),
                     })}
                   >
-                    {({handleChange, errors, touched, values}) => (
-                      <Form >
+                    {({handleChange, setFieldValue, errors, touched, values}) => (
+                      <Form encType="multipart/form-data" method="post">
                         <Grid container spacing={3} justify="center" className={styles.formContainer}>
                           <Grid item xs={12} sm={9}>
                             <TextField
@@ -324,6 +335,26 @@ class Component extends React.Component {
                               value={values.map}
                               fullWidth
                               onChange={handleChange}
+                            />
+                          </Grid>
+                          <Grid item xs={12} sm={9}>
+                            <Typography variant="body1" gutterBottom align="center">
+                              Add photo
+                            </Typography>
+                            <ImageUploader
+                              name="image"
+                              id="image"
+                              withIcon={true}
+                              buttonText='Choose image'
+                              imgExtension={['.jpg', '.gif', '.png']}
+                              maxFileSize={5242880}
+                              withPreview={true}
+                              onChange={event => {
+                                setFieldValue('image', event);
+                                console.log('event', event);
+                                console.log('event', values.image.concat(event));
+                              }}
+                              className={styles.file}
                             />
                           </Grid>
                           <Grid item xs={12} sm={9} className={styles.paperCard__item} align="center">

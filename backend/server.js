@@ -17,15 +17,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api', offersRoutes);
 app.use('/api', ordersRoutes);
 
-/* REACT WEBSITE */
-app.use(express.static(path.join(__dirname, '../build')));
-app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../build/index.html'));
-});
-
 /* API ERROR PAGES */
 app.use('/api', (req, res) => {
   res.status(404).send({ offer: 'Not found...' });
+});
+
+/* REACT WEBSITE */
+app.use(express.static(path.join(__dirname, '/uploads')));
+app.use(express.static(path.join(__dirname, '../build')));
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
 

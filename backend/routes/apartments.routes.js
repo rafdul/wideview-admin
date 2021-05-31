@@ -1,6 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const Apartment = require('../models/apartment.model');
+const path = require('path');
+
+const multer = require('multer');
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '../uploads'));
+  },
+  filename: function (req, file, cb) {
+    let nameImage = Date.now() + '-wideviev-' + file.originalname;
+    console.log('file:', file);
+    cb(null, nameImage);
+    console.log('nameImage:', nameImage);
+  },
+});
+let upload = multer({ storage });
+
 
 router.get('/offers', async (req, res) => {
   try {
@@ -27,9 +44,15 @@ router.get('/offers/:id', async (req, res) => {
   }
 });
 
-router.post('/offers/add', async (req,res) => {
+router.post('/offers/add', upload.array('image', 3), async (req,res) => {
   try {
-    console.log('req.body', req.body);
+    console.log('req.body:', req.body);
+    console.log('req.file:', req.file);
+    console.log('req.files:', req.files);
+    // console.log('req.file.filename:', req.file.filename);
+    // console.log('req.files.filename:', req.files.filename);
+    console.log('req.body.image:', req.body.image);
+
     const {name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, locationLat, locationLng, map } = req.body;
 
     const newOrder = new Apartment({name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, location: {lat: locationLat, lng: locationLng}, map});
