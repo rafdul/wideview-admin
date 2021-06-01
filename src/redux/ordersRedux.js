@@ -16,12 +16,14 @@ const FETCH_START = createActionName('FETCH_START');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const FETCH_ONE = createActionName('FETCH_ONE');
+const FETCH_DELETE_ONE = createActionName('FETCH_DELETE_ONE');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const fetchOne = payload => ({ payload, type: FETCH_ONE });
+export const fetchDeleteOne = payload => ({ payload, type: FETCH_DELETE_ONE });
 
 /* thunk creators */
 export const fetchAllOrders = () => {
@@ -52,6 +54,21 @@ export const fetchOneOrder = (id) => {
       .then(res => {
         dispatch(fetchOne(res.data));
       })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const fetchDeleteOneOrder = (order) => {
+  return(dispatch, getState) => {
+    console.log('order', order);
+    // dispatch(fetchStarted());
+    dispatch(fetchDeleteOne(order));
+
+    Axios
+      .delete(`${API_URL}/orders/delete`, {data: {_id: order._id}})
+
       .catch(err => {
         dispatch(fetchError(err.message || true));
       });
@@ -97,6 +114,18 @@ export const reducer = (statePart = [], action = {}) => {
           error: false,
         },
         oneOrder: action.payload,
+      };
+    }
+    case FETCH_DELETE_ONE: {
+      console.log('action.payload w reducer deleteOne:', action.payload);
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+          deleted: true,
+        },
+        data: statePart.data.filter(order => order._id !== action.payload._id),
       };
     }
     default:

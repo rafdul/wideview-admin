@@ -159,6 +159,9 @@ class Component extends React.Component {
                               error={errors.dataSubmited && touched.dataSubmited ? true : false}
                             />
                           </Grid>
+                          <Grid item xs={12} sm={9} className={styles.paperCard__item} align="center">
+                            <BtnSubmit variant='contained' color='secondary' text='Save'/>
+                          </Grid>
                         </Grid>
                       </Grid>
                     </Grid>
