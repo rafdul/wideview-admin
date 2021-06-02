@@ -57,10 +57,10 @@ router.post('/offers/add', upload.array('image', 3), async (req,res) => {
     req.files.map(el => arrayNameImage.push('/images/offers/' + el.filename));
     console.log('arrayNameImage', arrayNameImage);
 
-    const newOrder = new Apartment({id, name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, location: {lat: locationLat, lng: locationLng}, map, image: arrayNameImage});
-    await newOrder.save();
-    res.json(newOrder);
-    console.log('newOrder', newOrder);
+    const newOffer = new Apartment({id, name, city, category, description, price, bedrooms, kitchen, balcony, swimpool, location: {lat: locationLat, lng: locationLng}, map, image: arrayNameImage});
+    await newOffer.save();
+    res.json(newOffer);
+    console.log('newOrder', newOffer);
   }
   catch(err) {
     res.status(500).json(err);

@@ -26,4 +26,59 @@ router.get('/orders/:id', async (req, res) => {
   }
 });
 
+router.post('/orders/add', async (req,res) => {
+  try {
+    console.log('req.body:', req.body);
+    const { apartments, firstName, surname, email, phone, statusSubmited, dataSubmited, idSubmited } = req.body;
+
+    const newOrder = new Order({ apartments, firstName, surname, email, phone, statusSubmited, dataSubmited, idSubmited });
+    await newOrder.save();
+    res.json(newOrder);
+    console.log('newOrder', newOrder);
+  }
+  catch(err) {
+    res.status(500).json(err);
+  }
+});
+
+router.put('/orders/:id/edit', async (req,res) => {
+  try {
+    console.log('req.body:', req.body);
+    const { apartments, firstName, surname, email, phone, statusSubmited, dataSubmited, idSubmited } = req.body;
+
+    const editedOrder = await Order.findById(req.body._id);
+    if(editedOrder) {
+      const changedOrder = await Order.updateOne({_id: req.body._id}, {$set: { apartments, firstName, surname, email, phone, statusSubmited, dataSubmited, idSubmited }});
+      await changedOrder.save();
+      res.json(changedOrder);
+      console.log('changedOrder', changedOrder);
+    } else {
+      throw new Error('Something wrong!');
+    }
+  }
+  catch(err) {
+    res.status(500).json(err);
+  }
+});
+
+router.delete('/orders/delete', async (req, res) => {
+  try {
+    console.log('req.params:', req.params);
+    console.log('req.body w delete:', req.body);
+    // console.log('req w delete:', req);
+    const deleted = await Order.findById(req.body._id);
+    console.log('deleted', deleted);
+    if(deleted) {
+      await Order.deleteOne({_id: req.body._id});
+      res.json({message: 'Order deleted'});
+    }
+    else {
+      res.status(404).json({ offers: 'Not found'});
+    }
+  }
+  catch(err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

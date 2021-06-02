@@ -16,6 +16,8 @@ const FETCH_START = createActionName('FETCH_START');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const FETCH_ONE = createActionName('FETCH_ONE');
+const FETCH_ADD_ONE = createActionName('FETCH_ADD_ONE');
+const FETCH_EDIT_ONE = createActionName('FETCH_EDIT_ONE');
 const FETCH_DELETE_ONE = createActionName('FETCH_DELETE_ONE');
 
 /* action creators */
@@ -23,6 +25,8 @@ export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const fetchOne = payload => ({ payload, type: FETCH_ONE });
+export const fetchAddOne = payload => ({ payload, type: FETCH_ADD_ONE });
+export const fetchEditOne = payload => ({ payload, type: FETCH_EDIT_ONE });
 export const fetchDeleteOne = payload => ({ payload, type: FETCH_DELETE_ONE });
 
 /* thunk creators */
@@ -53,6 +57,37 @@ export const fetchOneOrder = (id) => {
       .get(`${API_URL}/orders/${id}`)
       .then(res => {
         dispatch(fetchOne(res.data));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const fetchAddOneOrder = (order) => {
+  return (dispatch, getState) => {
+    dispatch(fetchStarted());
+
+    Axios
+      .post(`${API_URL}/orders/add`, order, {headers: {'Content-Type': 'multipart/form-data'}})
+      .then(res => {
+        dispatch(fetchAddOne(order));
+        console.log('offer w axios:', order);
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const fetchEditOrder = (order, id) => {
+  return(dispatch, getState) => {
+    dispatch(fetchStarted());
+
+    Axios
+      .put(`${API_URL}/ordes/${id}/edit`, order)
+      .then(res => {
+        dispatch(fetchEditOne(order));
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
@@ -114,6 +149,32 @@ export const reducer = (statePart = [], action = {}) => {
           error: false,
         },
         oneOrder: action.payload,
+      };
+    }
+    case FETCH_ADD_ONE: {
+      console.log('action.payload w reducer addOne:', action.payload);
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+          added: true,
+        },
+        data: [...statePart.data, action.payload],
+      };
+    }
+    case FETCH_EDIT_ONE: {
+      const statePartIndex = statePart.data.findIndex(order => order._id === action.payload._id);
+      statePart.data.splice(statePartIndex, 1, action.payload);
+      console.log('action.payload w reducer edit:', action.payload);
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+          added: true,
+        },
+        data: [...statePart.data],
       };
     }
     case FETCH_DELETE_ONE: {

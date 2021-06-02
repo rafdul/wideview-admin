@@ -45,7 +45,7 @@ class Component extends React.Component {
             <h2 className={styles.title}>Order was deleted</h2>
             :
             <div>
-              <h2 className={styles.title}>Order id {oneOrder.idSubmited}</h2>
+              <h2 className={styles.title}>Order id: {oneOrder.idSubmited}</h2>
               <Grid container justify="space-between" className={styles.containerFlex}>
                 <Grid item xs={12} md={6}>
                   <Paper className={styles.box}>
@@ -61,7 +61,7 @@ class Component extends React.Component {
                 {oneOrder.apartments && oneOrder.apartments.map(item => (
                   <Grid item xs={12} md={6} key={item._id}>
                     <Paper className={styles.box + ' ' + styles.background}>
-                      <h5>Booking apartment (id {item.idOrder})</h5>
+                      <h5>Booking apartment (id: {item.idOrder})</h5>
                       <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>Name:</span> {item.name}</Typography>
                       <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>City:</span> {item.city}</Typography>
                       <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>From:</span>  {item.from}</Typography>
