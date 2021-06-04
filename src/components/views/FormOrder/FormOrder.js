@@ -22,6 +22,7 @@ import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { getOneOrder, getLoadingOrders, fetchAddOneOrder, fetchEditOrder } from '../../../redux/ordersRedux.js';
 import { getAllApartments, fetchAllApartments } from '../../../redux/apartmentsRedux.js';
+import { getAllCategories, fetchAllCategories } from '../../../redux/categoriesRedux.js';
 
 import styles from './FormOrder.module.scss';
 
@@ -79,18 +80,22 @@ class Component extends React.Component {
   }
 
   componentDidMount() {
-    const {fetchAllOffers} = this.props;
+    const { fetchAllOffers, fetchAllCategories } = this.props;
     fetchAllOffers();
+    fetchAllCategories();
+    console.log('fetchAllCategories:', fetchAllCategories);
   }
 
   render() {
-    const { className, oneOrder, isNewOrder, loading, offers } = this.props;
+    const { className, oneOrder, isNewOrder, loading, offers, categories } = this.props;
     const { order } = this.state;
     console.log('order w state:', order);
     console.log('order.apartments w state:', order.apartments);
     console.log('oneOrder:', oneOrder);
     console.log('oneOrder.name:', oneOrder.apartments);
     console.log('isNewOrder:', isNewOrder);
+    console.log('offers:', offers);
+    console.log('categories:', categories);
 
     return(
       <div className={clsx(className, styles.root)}>
@@ -257,42 +262,77 @@ class Component extends React.Component {
                               <Grid container spacing={3} justify="center">
                                 <Grid item xs={12} md={6}>
                                   <FormControl fullWidth>
-                                    <InputLabel id="name-select">Apartments</InputLabel>
+                                    <InputLabel id="name-select">Category</InputLabel>
                                     <Select
                                       labelId="name-select"
                                       fullWidth
-                                      name="apartments.name"
-                                      id="apartments.name"
-                                      value={values.apartments.name}
+                                      name="apartments.category"
+                                      id="apartments.category"
+                                      value={values.apartments.category}
                                       onChange={handleChange}
                                     >
-                                      {offers.map(item =>
+                                      {categories.map(item =>
                                         <MenuItem key={item._id} value={item.name}>{item.name}</MenuItem>
                                       )}
-                                      {console.log('values.apartments.name', values.apartments.name)}
+                                      {console.log('values.apartments.category', values.apartments.category)}
                                     </Select>
                                   </FormControl>
                                 </Grid>
-                                {values.apartments.name.length > 0
+                                {values.apartments.category.length > 0
                                   ?
                                   <Grid item xs={12} md={6}>
-                                    {offers.map(item => item.name === values.apartments.name
-                                      ?
-                                      <TextField
-                                        key={item.city}
-                                        disabled id="standard-disabled"
-                                        label="City"
-                                        defaultValue={values.apartments.city = item.city}
-                                      />
-                                      :
-                                      null
-                                    )}
-                                    {console.log('values.apartments.city', values.apartments.city)}
+                                    <FormControl fullWidth>
+                                      <InputLabel id="name-select">City</InputLabel>
+                                      <Select
+                                        labelId="name-select"
+                                        fullWidth
+                                        name="apartments.city"
+                                        id="apartments.city"
+                                        value={values.apartments.city}
+                                        onChange={handleChange}
+                                      >
+                                        {offers.map(item => item.category === values.apartments.category
+                                          ?
+                                          <MenuItem key={item.city} value={item.city}>{item.city}</MenuItem>
+                                          :
+                                          null
+                                        )}
+                                      </Select>
+                                    </FormControl>
                                   </Grid>
                                   :
                                   null
                                 }
-
+                                {values.apartments.city.length > 0
+                                  ?
+                                  <Grid item xs={12}>
+                                    {offers.map(item => item.city === values.apartments.city
+                                      ?
+                                      <Grid container spacing={3} justify="center" key={item.name}>
+                                        <Grid item xs={12} md={6}>
+                                          <TextField
+                                            xs={12} md={6}
+                                            disabled id="standard-disabled"
+                                            label="Name"
+                                            defaultValue={values.apartments.name = item.name}
+                                          />
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                          <TextField
+                                            xs={12} md={6}
+                                            disabled id="standard-disabled"
+                                            label="Price (for night)"
+                                            defaultValue={values.apartments.priceFromNight = item.price}
+                                          />
+                                        </Grid>
+                                      </Grid>
+                                      :
+                                      null
+                                    )}
+                                  </Grid>
+                                  :
+                                  null
+                                }
                               </Grid>
                             </Grid>
                             :
@@ -328,21 +368,24 @@ Component.propTypes = {
   addOneOrder: PropTypes.func,
   editOneOrder: PropTypes.func,
   loading: PropTypes.object,
-  fetchAllOffers:PropTypes.func,
+  fetchAllOffers: PropTypes.func,
   offers: PropTypes.array,
+  categories: PropTypes.array,
+  fetchAllCategories: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   oneOrder: getOneOrder(state),
   loading: getLoadingOrders(state),
   offers: getAllApartments(state),
-
+  categories: getAllCategories(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   addOneOrder: order => dispatch(fetchAddOneOrder(order)),
   editOneOrder: order => dispatch(fetchEditOrder(order)),
   fetchAllOffers: offer => dispatch(fetchAllApartments(offer)),
+  fetchAllCategories: category => dispatch(fetchAllCategories(category)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

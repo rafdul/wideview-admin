@@ -1,4 +1,12 @@
 export const initialState = {
+  categories: {
+    data: [],
+    loading: {
+      active: false,
+      error: false,
+    },
+  },
+
   apartments: {
     data: [],
     loading: {
