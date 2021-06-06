@@ -282,7 +282,7 @@ class Component extends React.Component {
                             </Grid>
                             <Grid container spacing={3} justify="center">
                               <Grid item xs={12} sm={9} align="center">
-                                <h5>Add suite</h5>
+                                <h5 className={styles.subtitle}>Add suite</h5>
                               </Grid>
                             </Grid>
                           </Grid>
@@ -427,7 +427,29 @@ class Component extends React.Component {
                                 <h6>Booking: {apartment.name}</h6>
                                 <Grid container spacing={3} justify="center">
                                   <Grid item xs={12} md={6}>
-                                    <TextField disabled id="standard-disabled" label="Apartments" defaultValue={apartment.name}/>
+                                    <TextField disabled id="standard-disabled" label="Apartments" defaultValue={apartment.name} className={styles.box}/>
+                                  </Grid>
+                                  <Grid item xs={12} md={6}>
+                                    <TextField disabled id="standard-disabled" label="City" defaultValue={apartment.city} className={styles.box}/>
+                                  </Grid>
+                                </Grid>
+                                <Grid container spacing={3} justify="center">
+                                  <Grid item xs={12} md={4}>
+                                    <TextField disabled id="standard-disabled" label="Date from" defaultValue={apartment.from} className={styles.box}/>
+                                  </Grid>
+                                  <Grid item xs={12} md={4}>
+                                    <TextField disabled id="standard-disabled" label="Nights" defaultValue={apartment.nights} className={styles.box}/>
+                                  </Grid>
+                                  <Grid item xs={12} md={4}>
+                                    <TextField disabled id="standard-disabled" label="People" defaultValue={apartment.people} className={styles.box}/>
+                                  </Grid>
+                                </Grid>
+                                <Grid container spacing={3} justify="center">
+                                  <Grid item xs={12} md={6}>
+                                    <TextField disabled id="standard-disabled" label="Price for night" defaultValue={apartment.priceFromNight} className={styles.box}/>
+                                  </Grid>
+                                  <Grid item xs={12} md={6}>
+                                    <TextField disabled id="standard-disabled" label="Total price" defaultValue={apartment.totalPrice} className={styles.box}/>
                                   </Grid>
                                 </Grid>
                               </Grid>

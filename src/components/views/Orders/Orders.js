@@ -59,6 +59,11 @@ class Component extends React.Component {
       return(
         <div className={clsx(className, styles.root)}>
           <h2 className={styles.title}>Orders</h2>
+          <div className={styles.headContainer}>
+            <div className={styles.btnContainer}>
+              <Btn variant='contained' color='primary' link='/orders/add' text='Add new order' />
+            </div>
+          </div>
           <Paper className={styles.box__item}>
             <TableContainer>
               <Table className={styles.table}>

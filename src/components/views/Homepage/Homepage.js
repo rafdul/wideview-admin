@@ -69,6 +69,7 @@ class Component extends React.Component {
                 </TableContainer>
                 <div className={styles.btnContainer}>
                   <Btn variant='contained' color='primary' link='/orders' text='View all orders' />
+                  <Btn variant='contained' color='secondary' link={`/orders/add`} text='Add new order' />
                 </div>
               </Paper>
             </Grid>

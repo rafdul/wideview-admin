@@ -6,6 +6,15 @@
     @include titleOfPage;
   }
 
+  .headContainer {
+    display: flex;
+    justify-content: flex-end;
+
+    .btnContainer {
+      text-align: right;
+    }
+  }
+
   .btn__more {
     a {
       color: $color-primary;
