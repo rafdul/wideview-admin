@@ -26,6 +26,7 @@ class Component extends React.Component {
 
   render() {
     const {className, oneOrder, loading, fetchDeleteOneOrder} = this.props;
+    console.log('oneOrder', oneOrder);
 
     if(loading && loading.active === true) {
       return(
@@ -58,21 +59,44 @@ class Component extends React.Component {
                     <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>Status:</span>  {oneOrder.statusSubmited}</Typography>
                   </Paper>
                 </Grid>
-                {oneOrder.apartments && oneOrder.apartments.map(item => (
-                  <Grid item xs={12} md={6} key={item._id}>
-                    <Paper className={styles.box + ' ' + styles.background}>
-                      <h5>Booking apartment (id: {item.idOrder})</h5>
-                      <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>Name:</span> {item.name}</Typography>
-                      <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>City:</span> {item.city}</Typography>
-                      <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>From:</span>  {item.from}</Typography>
-                      <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>Nights:</span>  {item.nights}</Typography>
-                      <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>People:</span>  {item.people}</Typography>
-                      <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>Total price:</span>  {item.totalPrice}</Typography>
-                      <Typography variant="body2" component="div" className={styles.box__item}><span className={styles.box__text}>Category:</span>  {item.category}</Typography>
-                      <Typography variant="body2" component="div" className={styles.box__item}><span className={styles.box__text}>Price (for night):</span>  {item.priceFromNight}</Typography>
-                    </Paper>
-                  </Grid>
-                ))}
+                {oneOrder.apartments
+                  ?
+                  oneOrder.apartments.length > 0
+                    ?
+                    oneOrder.apartments.map(item => (
+                      <Grid item xs={12} md={6} key={item._id}>
+                        <Paper className={styles.box + ' ' + styles.background}>
+                          <h5>Booking apartment (id: {item.idOrder})</h5>
+                          <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>Name:</span> {item.name}</Typography>
+                          <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>City:</span> {item.city}</Typography>
+                          <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>From:</span>  {item.from}</Typography>
+                          <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>Nights:</span>  {item.nights}</Typography>
+                          <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>People:</span>  {item.people}</Typography>
+                          <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>Total price:</span>  {item.totalPrice}</Typography>
+                          <Typography variant="body2" component="div" className={styles.box__item}><span className={styles.box__text}>Category:</span>  {item.category}</Typography>
+                          <Typography variant="body2" component="div" className={styles.box__item}><span className={styles.box__text}>Price (for night):</span>  {item.priceFromNight}</Typography>
+                          <Typography variant="body2" component="div" className={styles.box__item}><span className={styles.box__text}>Status:</span>  {item.status}</Typography>
+                        </Paper>
+                      </Grid>
+                    ))
+                    :
+                    <Grid item xs={12} md={6}>
+                      <Paper className={styles.box + ' ' + styles.background}>
+                        <h5>Booking apartment (id: {oneOrder.apartments.idOrder})</h5>
+                        <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>Name:</span> {oneOrder.apartments.name}</Typography>
+                        <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>City:</span> {oneOrder.apartments.city}</Typography>
+                        <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>From:</span>  {oneOrder.apartments.from}</Typography>
+                        <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>Nights:</span>  {oneOrder.apartments.nights}</Typography>
+                        <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>People:</span>  {oneOrder.apartments.people}</Typography>
+                        <Typography variant="body1" component="div" className={styles.box__item}><span className={styles.box__text}>Total price:</span>  {oneOrder.apartments.totalPrice}</Typography>
+                        <Typography variant="body2" component="div" className={styles.box__item}><span className={styles.box__text}>Category:</span>  {oneOrder.apartments.category}</Typography>
+                        <Typography variant="body2" component="div" className={styles.box__item}><span className={styles.box__text}>Price (for night):</span>  {oneOrder.apartments.priceFromNight}</Typography>
+                        <Typography variant="body2" component="div" className={styles.box__item}><span className={styles.box__text}>Status:</span>  {oneOrder.apartments.status}</Typography>
+                      </Paper>
+                    </Grid>
+                  :
+                  null
+                }
               </Grid>
               <Grid container justify="space-between" className={styles.containerFlex}>
                 <Grid item xs={12} align="center">

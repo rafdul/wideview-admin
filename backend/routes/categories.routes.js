@@ -5,7 +5,7 @@ const Category = require('../models/category.model');
 router.get('/category', async (req, res) => {
   try {
     const result = await Category.find();
-    console.log('result w category:', result);
+    // console.log('result w category:', result);
     if(!result) res.status(404).json({ category: 'Not found'});
     else res.json(result);
   }

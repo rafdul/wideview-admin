@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {BtnSubmit} from '../../common/BtnSubmit/BtnSubmit';
+import {DatePicker} from '../../features/DatePicker/DatePicker';
+import {PlusMinusSwitcher} from '../../features/PlusMinusSwitcher/PlusMinusSwitcher';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -13,10 +15,15 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
 import { Input } from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
+import uniqid from 'uniqid';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
@@ -46,7 +53,7 @@ class Component extends React.Component {
           people: '',
           totalPrice: '',
           status: '',
-          image: '',
+          // image: '',
         }
         :
         this.props.oneOrder.apartments.map(el => {
@@ -63,7 +70,7 @@ class Component extends React.Component {
             people: el.people,
             totalPrice: el.totalPrice,
             status: el.status,
-            image: el.image,
+            // image: el.image,
           };
         }),
       firstName: this.props.isNewOrder ? '' : this.props.oneOrder.firstName,
@@ -77,6 +84,16 @@ class Component extends React.Component {
       // status: { type: String },
       // idOrder: { type: String },
     },
+
+    statusProduct: {
+      nights: false,
+      people: false,
+      date: false,
+    },
+
+    dateFrom: '',
+    nights: '',
+    people: '',
   }
 
   componentDidMount() {
@@ -86,16 +103,32 @@ class Component extends React.Component {
     console.log('fetchAllCategories:', fetchAllCategories);
   }
 
+  setDate = (date) => {
+    console.log('date', date);
+
+    this.setState({dateFrom: date.toLocaleDateString('en-US')});
+  }
+
+  setNight = (nights) => {
+
+    this.setState({nights: parseInt(nights)});
+  }
+
+  setPeople = (people) => {
+
+    this.setState({people: people});
+  }
+
   render() {
-    const { className, oneOrder, isNewOrder, loading, offers, categories } = this.props;
-    const { order } = this.state;
-    console.log('order w state:', order);
-    console.log('order.apartments w state:', order.apartments);
-    console.log('oneOrder:', oneOrder);
-    console.log('oneOrder.name:', oneOrder.apartments);
-    console.log('isNewOrder:', isNewOrder);
-    console.log('offers:', offers);
-    console.log('categories:', categories);
+    const { className, oneOrder, isNewOrder, loading, offers, categories, addOneOrder } = this.props;
+    const { order, statusProduct } = this.state;
+    // console.log('order w state:', order);
+    // console.log('order.apartments w state:', order.apartments);
+    // console.log('oneOrder:', oneOrder);
+    // console.log('oneOrder.name:', oneOrder.apartments);
+    // console.log('isNewOrder:', isNewOrder);
+    // console.log('offers:', offers);
+    // console.log('categories:', categories);
 
     return(
       <div className={clsx(className, styles.root)}>
@@ -128,7 +161,7 @@ class Component extends React.Component {
                           people: '',
                           totalPrice: '',
                           status: '',
-                          image: '',
+                          // image: '',
                         }
                         :
                         order.apartments.map(i => {
@@ -145,7 +178,7 @@ class Component extends React.Component {
                             people: i.people,
                             totalPrice: i.totalPrice,
                             status: i.status,
-                            image: i.image,
+                            // image: i.image,
                           };
                         }),
                       firstName: order.firstName,
@@ -157,6 +190,27 @@ class Component extends React.Component {
                       idSubmited: order.idSubmited,
                     }}
                     onSubmit={values => {
+                      values.apartments.from = this.state.dateFrom;
+                      values.apartments.nights = this.state.nights;
+                      values.apartments.totalPrice = this.state.nights * values.apartments.price;
+                      values.apartments.people = this.state.people;
+                      values.apartments.idOrder = uniqid('order-');
+                      values.apartments.dataOrder = new Date().toISOString();
+                      values.apartments.status = 'editedByAdmin';
+                      values.idSubmited = uniqid('submit-');
+                      values.statusSubmited = 'submited';
+                      values.dataSubmited = new Date().toISOString();
+
+                      if(this.state.nights < 1) {
+                        this.setState({statusProduct: {...statusProduct, nights: true}});
+                      } else if(this.state.people < 1) {
+                        this.setState({statusProduct: {...statusProduct, people: true}});
+                      } else if(!this.state.from) {
+                        this.setState({statusProduct: {...statusProduct, date: true}});
+                      } else {
+                        this.setState({statusProduct: {...statusProduct, nights: false, people: false, date: false}});
+                      }
+                      addOneOrder(values);
                       console.log('values', values);
                     }}
                     validationSchema={Yup.object().shape({
@@ -227,32 +281,8 @@ class Component extends React.Component {
                               </Grid>
                             </Grid>
                             <Grid container spacing={3} justify="center">
-                              <Grid item xs={12} md={6}>
-                                <TextField
-                                  size="small"
-                                  name="statusSubmited"
-                                  id="statusSubmited"
-                                  label="Status of submit"
-                                  value={values.statusSubmited}
-                                  fullWidth
-                                  onChange={handleChange}
-                                  error={errors.statusSubmited && touched.statusSubmited ? true : false}
-                                />
-                              </Grid>
-                              <Grid item xs={12} md={6}>
-                                <TextField
-                                  size="small"
-                                  name="dataSubmited"
-                                  id="dataSubmited"
-                                  label="Date of submit"
-                                  value={values.dataSubmited}
-                                  fullWidth
-                                  onChange={handleChange}
-                                  error={errors.dataSubmited && touched.dataSubmited ? true : false}
-                                />
-                              </Grid>
-                              <Grid item xs={12} sm={9} className={styles.paperCard__item} align="center">
-                                <BtnSubmit variant='contained' color='secondary' text='Save'/>
+                              <Grid item xs={12} sm={9} align="center">
+                                <h5>Add suite</h5>
                               </Grid>
                             </Grid>
                           </Grid>
@@ -274,7 +304,6 @@ class Component extends React.Component {
                                       {categories.map(item =>
                                         <MenuItem key={item._id} value={item.name}>{item.name}</MenuItem>
                                       )}
-                                      {console.log('values.apartments.category', values.apartments.category)}
                                     </Select>
                                   </FormControl>
                                 </Grid>
@@ -309,12 +338,13 @@ class Component extends React.Component {
                                     {offers.map(item => item.city === values.apartments.city
                                       ?
                                       <Grid container spacing={3} justify="center" key={item.name}>
-                                        <Grid item xs={12} md={6}>
+                                        <Grid item xs={12} md={6} >
                                           <TextField
                                             xs={12} md={6}
                                             disabled id="standard-disabled"
                                             label="Name"
                                             defaultValue={values.apartments.name = item.name}
+                                            className={styles.box}
                                           />
                                         </Grid>
                                         <Grid item xs={12} md={6}>
@@ -323,6 +353,59 @@ class Component extends React.Component {
                                             disabled id="standard-disabled"
                                             label="Price (for night)"
                                             defaultValue={values.apartments.priceFromNight = item.price}
+                                            className={styles.box}
+                                          />
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                          <div className={styles.name + ' ' + styles.date}>
+                                            <Typography gutterBottom variant="body1" component="p" className={styles.text}>
+                                              From:
+                                            </Typography>
+                                          </div>
+                                          <div className={styles.choose}>
+                                            <DatePicker setDate={this.setDate} />
+                                            {statusProduct.date && !this.state.dateFrom
+                                              ? <span className={styles.content__alert + ' ' + styles.content__alert_date}>You have to choose date from</span>
+                                              : null
+                                            }
+                                          </div>
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                          <div className={styles.name}>
+                                            <Typography gutterBottom variant="body1" component="p" className={styles.text}>
+                                              Nights:
+                                            </Typography>
+                                          </div>
+                                          <div className={styles.choose}>
+                                            <PlusMinusSwitcher setAmount={this.setNight} />
+                                            {statusProduct.nights  && this.state.nights === 0
+                                              ? <span className={styles.content__alert}>You have to choose amount of nights</span>
+                                              : null
+                                            }
+                                          </div>
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                          <div className={styles.name}>
+                                            <Tooltip title={`max. ${item.bedrooms *2 } people`}>
+                                              <Typography gutterBottom variant="body1" component="p" className={styles.text}>
+                                                People <FontAwesomeIcon icon={faInfoCircle} className={styles.fontIcon}/> :
+                                              </Typography>
+                                            </Tooltip>
+                                          </div>
+                                          <div className={styles.choose}>
+                                            <PlusMinusSwitcher maxValue={`${item.bedrooms *2}`} setAmount={this.setPeople} />
+                                            {statusProduct.people && this.state.people === 0
+                                              ? <span className={styles.content__alert}>You have to choose amount of people</span>
+                                              : null
+                                            }
+                                          </div>
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                          <TextField
+                                            xs={12} md={6}
+                                            label="Total price"
+                                            value={values.apartments.totalPrice = this.state.nights * item.price}
+                                            className={styles.box}
                                           />
                                         </Grid>
                                       </Grid>
@@ -333,6 +416,9 @@ class Component extends React.Component {
                                   :
                                   null
                                 }
+                              </Grid>
+                              <Grid item xs={12} sm={9} align="center" className={styles.btn}>
+                                <BtnSubmit variant='contained' color='secondary' text='Save'/>
                               </Grid>
                             </Grid>
                             :

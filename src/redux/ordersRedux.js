@@ -69,10 +69,10 @@ export const fetchAddOneOrder = (order) => {
     dispatch(fetchStarted());
 
     Axios
-      .post(`${API_URL}/orders/add`, order, {headers: {'Content-Type': 'multipart/form-data'}})
+      .post(`${API_URL}/orders/add`, order)
       .then(res => {
         dispatch(fetchAddOne(order));
-        console.log('offer w axios:', order);
+        console.log('order w axios:', order);
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));

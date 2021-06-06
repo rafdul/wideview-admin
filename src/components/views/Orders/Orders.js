@@ -75,7 +75,7 @@ class Component extends React.Component {
                 <TableBody className={styles.table__body}>
                   {allOrders && allOrders.map(order => (
                     <TableRow key={order._id}>
-                      <TableCell component="th" scope="row">{order.dataSubmited.slice(0,10)}</TableCell>
+                      <TableCell component="th" scope="row">{order.dataSubmited ? order.dataSubmited.slice(0,10) : null}</TableCell>
                       <TableCell align="right">{order.idSubmited}</TableCell>
                       <TableCell align="right">{order.email}</TableCell>
                       <TableCell align="right">{order.phone}</TableCell>

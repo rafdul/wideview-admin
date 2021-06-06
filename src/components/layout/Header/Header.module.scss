@@ -29,13 +29,13 @@
     }
   }
 
-  @media(max-width: 600px) {
+  @media(max-width: 700px) {
     .containerHeader {
       flex-direction: column;
     }
   }
 
-  @media(max-width: 400px) {
+  @media(max-width: 550px) {
     .menu__list__flex {
       flex-direction: column;
     }

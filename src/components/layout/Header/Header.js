@@ -27,6 +27,7 @@ const Component = ({className}) => (
             <Nav.Link as={Link} to={'/orders'} className={styles.menu__list__item}>Orders</Nav.Link>
             <Nav.Link as={Link} to={'/offers'} className={styles.menu__list__item}>Offers</Nav.Link>
             <Nav.Link as={Link} to={'/offers/add'} className={styles.menu__list__item}>Add offer</Nav.Link>
+            <Nav.Link as={Link} to={'/orders/add'} className={styles.menu__list__item}>Add order</Nav.Link>
           </Nav>
         </Navbar>
       </div>
