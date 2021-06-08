@@ -32,11 +32,12 @@ router.get('/offers', async (req, res) => {
 });
 
 router.get('/offers/:id', async (req, res) => {
-  console.log('req.body:', req.body);
+  // console.log('req.body:', req.body);
   try {
+    // const result = await Apartment.findById(req.params.id);
     const result = await Apartment.findOne({id: req.params.id});
     console.log('req.params w get/id:', req.params);
-    console.log('req.body:', req.body);
+    console.log('result:', result);
     if(!result) res.status(404).json({ offers: 'Not found'});
     else res.json(result);
   }

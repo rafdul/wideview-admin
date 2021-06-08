@@ -4,25 +4,13 @@ import { FormOrderComponent } from './FormOrder';
 
 describe('Component FormOrder', () => {
   it('should render without crashing', () => {
-    const apartments =
-      {
-        name: '',
-        city: '',
-        priceFromNight: '',
-        category: '',
-        _id: '',
-        dataOrder: '',
-        idOrder: '',
-        from: '',
-        nights: '',
-        people: '',
-        totalPrice: '',
-        status: '',
-      };
-    console.log('apartments', apartments);
-    const order = {};
+    const order = [{}];
+    const values = [{}];
+    const fetchAllOffers = function(){};
+    const fetchAllCategories = function(){};
 
-    const component = shallow(<FormOrderComponent order={order} />);
+    const component = shallow(<FormOrderComponent order={order} values={values} isNewOrder={true} fetchAllOffers={fetchAllOffers} fetchAllCategories={fetchAllCategories} />);
+    console.log(component);
     expect(component).toBeTruthy();
   });
 });
