@@ -72,7 +72,6 @@ export const fetchAddOneOrder = (order) => {
       .post(`${API_URL}/orders/add`, order)
       .then(res => {
         dispatch(fetchAddOne(order));
-        console.log('order w axios:', order);
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
@@ -82,26 +81,21 @@ export const fetchAddOneOrder = (order) => {
 
 export const fetchEditOrder = (order, id) => {
   return(dispatch, getState) => {
-    console.log('order', order);
     dispatch(fetchStarted());
 
     Axios
       .put(`${API_URL}/orders/${id}/edit`, order)
       .then(res => {
         dispatch(fetchEditOne(order));
-        console.log('order w axios:', order);
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
-        console.log('error', err);
       });
   };
 };
 
 export const fetchDeleteOneOrder = (order) => {
   return(dispatch, getState) => {
-    console.log('order', order);
-    // dispatch(fetchStarted());
     dispatch(fetchDeleteOne(order));
 
     Axios
@@ -155,7 +149,7 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_ADD_ONE: {
-      console.log('action.payload w reducer addOne:', action.payload);
+      // console.log('action.payload w reducer addOne:', action.payload);
       return {
         ...statePart,
         loading: {
@@ -167,8 +161,7 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_EDIT_ONE: {
-      console.log('statePart', statePart);
-      console.log('action.payload w reducer edit:', action.payload);
+      // console.log('action.payload w reducer edit:', action.payload);
       const statePartIndex = statePart.data.findIndex(order => order._id === action.payload._id);
       statePart.data.splice(statePartIndex, 1, action.payload);
 
@@ -183,7 +176,7 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_DELETE_ONE: {
-      console.log('action.payload w reducer deleteOne:', action.payload);
+      // console.log('action.payload w reducer deleteOne:', action.payload);
       return {
         ...statePart,
         loading: {

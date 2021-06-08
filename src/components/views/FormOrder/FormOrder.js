@@ -51,7 +51,6 @@ class Component extends React.Component {
           people: '',
           totalPrice: '',
           status: '',
-          // image: '',
         }
         :
         this.props.oneOrder.apartments.length > 0
@@ -70,7 +69,6 @@ class Component extends React.Component {
               people: el.people,
               totalPrice: el.totalPrice,
               status: el.status,
-              // image: el.image,
             };
           })
           :
@@ -87,7 +85,6 @@ class Component extends React.Component {
             people: this.props.oneOrder.apartments.people,
             totalPrice: this.props.oneOrder.apartments.totalPrice,
             status: this.props.oneOrder.apartments.status,
-            // image: this.props.oneOrder.apartments.image,
           },
 
       firstName: this.props.isNewOrder ? '' : this.props.oneOrder.firstName,
@@ -98,9 +95,6 @@ class Component extends React.Component {
       dataSubmited: this.props.isNewOrder ? '' : this.props.oneOrder.dataSubmited,
       idSubmited: this.props.isNewOrder ? '' : this.props.oneOrder.idSubmited,
       _id: this.props.isNewOrder ? '' : this.props.oneOrder._id,
-      // dataOrder: { type: String },
-      // status: { type: String },
-      // idOrder: { type: String },
     },
 
     statusProduct: {
@@ -118,11 +112,9 @@ class Component extends React.Component {
     const { fetchAllOffers, fetchAllCategories } = this.props;
     fetchAllOffers();
     fetchAllCategories();
-    console.log('fetchAllCategories:', fetchAllCategories);
   }
 
   setDate = (date) => {
-    console.log('date', date);
 
     this.setState({dateFrom: date.toLocaleDateString('en-US')});
   }
@@ -138,15 +130,11 @@ class Component extends React.Component {
   }
 
   render() {
-    const { className, oneOrder, isNewOrder, loading, offers, categories, addOneOrder, editOneOrder } = this.props;
+    const { className, isNewOrder, loading, offers, categories, addOneOrder, editOneOrder } = this.props;
     const { order, statusProduct } = this.state;
     // console.log('order w state:', order);
-    // console.log('order.apartments w state:', order.apartments);
-    // console.log('oneOrder:', oneOrder);
-    // console.log('oneOrder.name:', oneOrder.apartments);
     // console.log('isNewOrder:', isNewOrder);
     // console.log('offers:', offers);
-    // console.log('categories:', categories);
 
     return(
       <div className={clsx(className, styles.root)}>
@@ -198,7 +186,6 @@ class Component extends React.Component {
                               people: i.people,
                               totalPrice: i.totalPrice,
                               status: i.status,
-                              // image: i.image,
                             };
                           })
                           :
@@ -215,7 +202,6 @@ class Component extends React.Component {
                             people: order.apartments.people,
                             totalPrice: order.apartments.totalPrice,
                             status: order.apartments.status,
-                            // image: order.apartments.image,
                           },
                       firstName: order.firstName,
                       surname: order.surname,

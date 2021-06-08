@@ -4,7 +4,10 @@ import { OffersComponent } from './Offers';
 
 describe('Component Offers', () => {
   it('should render without crashing', () => {
-    const component = shallow(<OffersComponent />);
+    const allApartments = [];
+    const fetchAllOffers = function(){};
+
+    const component = shallow(<OffersComponent allApartments={allApartments} fetchAllOffers={fetchAllOffers} />);
     expect(component).toBeTruthy();
   });
 });

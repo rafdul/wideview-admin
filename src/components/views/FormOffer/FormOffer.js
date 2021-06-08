@@ -47,8 +47,8 @@ class Component extends React.Component {
 
   componentDidUpdate = (prevProps, prevState) => {
     if(this.props.isNewAnnounce && this.props.isNewAnnounce !== prevProps.isNewAnnounce) {
-      console.log('prevProps', prevProps);
-      console.log('prevState', prevState);
+      // console.log('prevProps', prevProps);
+      // console.log('prevState', prevState);
 
       const {fetchEmptyOne} = this.props;
       fetchEmptyOne();
@@ -78,9 +78,9 @@ class Component extends React.Component {
     const {className, addOneOffer, isNewAnnounce, oneOffer, loading, editOneOffer} = this.props;
     const {offer} = this.state;
 
-    console.log('isNewAnnounce', isNewAnnounce);
-    console.log('oneOffer', oneOffer);
-    console.log('offer', offer);
+    // console.log('isNewAnnounce', isNewAnnounce);
+    // console.log('oneOffer', oneOffer);
+    // console.log('offer', offer);
 
     return(
       <div className={clsx(className, styles.root)}>
@@ -115,20 +115,19 @@ class Component extends React.Component {
                       id: offer.id,
                     }}
                     onSubmit={values => {
-                      console.log('values', values);
                       if(isNewAnnounce) {
                         values.id = uniqid('offer-');
                         const formData = new FormData();
                         for (let key of ['id', 'name','city', 'category', 'description', 'price', 'bedrooms', 'kitchen', 'balcony', 'swimpool', 'locationLat', 'locationLng', 'map']) {
                           formData.append(key, values[key]);
                         }
-                        console.log('values.image', values.image);
                         values.image.map(el => formData.append('image', el));
                         // formData.append('image', values.image);
-                        console.log(formData);
+                        // console.log(formData);
                         addOneOffer(formData);
                       } else {
                         values._id = offer._id;
+                        // console.log('values', values);
                         editOneOffer(values);
                       }
                     }}
@@ -355,7 +354,7 @@ class Component extends React.Component {
                               withPreview={true}
                               onChange={event => {
                                 setFieldValue('image', event);
-                                console.log('event', event);
+                                // console.log('event', event);
                               }}
                               className={styles.file}
                             />

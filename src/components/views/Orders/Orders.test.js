@@ -4,7 +4,10 @@ import { OrdersComponent } from './Orders';
 
 describe('Component Orders', () => {
   it('should render without crashing', () => {
-    const component = shallow(<OrdersComponent />);
+    const allOrders =[];
+    const fetchAllOrders = function(){};
+
+    const component = shallow(<OrdersComponent allOrders={allOrders} fetchAllOrders={fetchAllOrders} />);
     expect(component).toBeTruthy();
   });
 });

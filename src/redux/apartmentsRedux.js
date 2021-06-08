@@ -59,7 +59,6 @@ export const fetchOneApartments = (id) => {
       .get(`${API_URL}/offers/${id}`)
       .then(res => {
         dispatch(fetchOne(res.data));
-        console.log('res.data:', res.data);
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
@@ -75,7 +74,6 @@ export const fetchAddOneApartments = (offer) => {
       .post(`${API_URL}/offers/add`, offer, {headers: {'Content-Type': 'multipart/form-data'}})
       .then(res => {
         dispatch(fetchAddOne(offer));
-        console.log('offer w axios:', offer);
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
@@ -100,16 +98,11 @@ export const fetchEditApartments = (offer, id) => {
 
 export const fetchDeleteApartments = (offer) => {
   return(dispatch, getState) => {
-    console.log('offer', offer);
     // dispatch(fetchStarted());
     dispatch(fetchDeleteOne(offer));
 
     Axios
       .delete(`${API_URL}/offers/delete`, {data: {_id: offer._id}})
-      // .then(res => {
-      //   dispatch(fetchDeleteOne(offer));
-      //   console.log('offer', offer);
-      // })
       .catch(err => {
         dispatch(fetchError(err.message || true));
       });
@@ -149,7 +142,7 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_ONE: {
-      console.log('action.payload w fetchone:', action.payload);
+      // console.log('action.payload w fetchone:', action.payload);
       return {
         ...statePart,
         loading: {
@@ -170,7 +163,7 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_ADD_ONE: {
-      console.log('action.payload w reducer addone:', action.payload);
+      // console.log('action.payload w reducer addone:', action.payload);
 
       return {
         ...statePart,
@@ -185,7 +178,7 @@ export const reducer = (statePart = [], action = {}) => {
     case FETCH_EDIT_ONE: {
       const statePartIndex = statePart.data.findIndex(offer => offer._id === action.payload._id);
       statePart.data.splice(statePartIndex, 1, action.payload);
-      console.log('action.payload w reducer edit:', action.payload);
+      // console.log('action.payload w reducer edit:', action.payload);
 
       return {
         ...statePart,
@@ -198,9 +191,7 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_DELETE_ONE: {
-      // const statePartIndex = statePart.data.findIndex(offer => offer._id === action.payload._id);
-      // statePart.data.splice(statePartIndex, 1);
-      console.log('action.payload w reducer edit:', action.payload);
+      // console.log('action.payload w reducer edit:', action.payload);
 
       return {
         ...statePart,
