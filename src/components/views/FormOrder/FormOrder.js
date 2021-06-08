@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {BtnSubmit} from '../../common/BtnSubmit/BtnSubmit';
 import {DatePicker} from '../../features/DatePicker/DatePicker';
 import {PlusMinusSwitcher} from '../../features/PlusMinusSwitcher/PlusMinusSwitcher';
+import {DisplayOrderInForm} from '../../common/DisplayOrderInForm/DisplayOrderInForm';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -458,76 +459,15 @@ class Component extends React.Component {
                                   null
                                 }
                               </Grid>
-                              {/* <Grid item xs={12} sm={9} align="center" className={styles.btn}>
-                                <BtnSubmit variant='contained' color='secondary' text='Save'/>
-                              </Grid> */}
                             </Grid>
                             :
                             order.apartments.length > 0
                               ?
                               order.apartments.map(apartment =>
-                                <Grid item xs={12} sm={9} key={apartment._id}>
-                                  <h6>Booking: {apartment.name}</h6>
-                                  <Grid container spacing={3} justify="center">
-                                    <Grid item xs={12} md={6}>
-                                      <TextField disabled id="standard-disabled" label="Apartments" defaultValue={apartment.name} className={styles.box}/>
-                                    </Grid>
-                                    <Grid item xs={12} md={6}>
-                                      <TextField disabled id="standard-disabled" label="City" defaultValue={apartment.city} className={styles.box}/>
-                                    </Grid>
-                                  </Grid>
-                                  <Grid container spacing={3} justify="center">
-                                    <Grid item xs={12} md={4}>
-                                      <TextField disabled id="standard-disabled" label="Date from" defaultValue={apartment.from} className={styles.box}/>
-                                    </Grid>
-                                    <Grid item xs={12} md={4}>
-                                      <TextField disabled id="standard-disabled" label="Nights" defaultValue={apartment.nights} className={styles.box}/>
-                                    </Grid>
-                                    <Grid item xs={12} md={4}>
-                                      <TextField disabled id="standard-disabled" label="People" defaultValue={apartment.people} className={styles.box}/>
-                                    </Grid>
-                                  </Grid>
-                                  <Grid container spacing={3} justify="center">
-                                    <Grid item xs={12} md={6}>
-                                      <TextField disabled id="standard-disabled" label="Price for night" defaultValue={apartment.priceFromNight} className={styles.box}/>
-                                    </Grid>
-                                    <Grid item xs={12} md={6}>
-                                      <TextField disabled id="standard-disabled" label="Total price" defaultValue={apartment.totalPrice} className={styles.box}/>
-                                    </Grid>
-                                  </Grid>
-                                </Grid>
+                                <DisplayOrderInForm key={apartment._id} order={apartment}/>
                               )
                               :
-                              <Grid item xs={12} sm={9} key={order.apartments._id}>
-                                <h6>Booking: {order.apartments.name}</h6>
-                                <Grid container spacing={3} justify="center">
-                                  <Grid item xs={12} md={6}>
-                                    <TextField disabled id="standard-disabled" label="Apartments" defaultValue={order.apartments.name} className={styles.box}/>
-                                  </Grid>
-                                  <Grid item xs={12} md={6}>
-                                    <TextField disabled id="standard-disabled" label="City" defaultValue={order.apartments.city} className={styles.box}/>
-                                  </Grid>
-                                </Grid>
-                                <Grid container spacing={3} justify="center">
-                                  <Grid item xs={12} md={4}>
-                                    <TextField disabled id="standard-disabled" label="Date from" defaultValue={order.apartments.from} className={styles.box}/>
-                                  </Grid>
-                                  <Grid item xs={12} md={4}>
-                                    <TextField disabled id="standard-disabled" label="Nights" defaultValue={order.apartments.nights} className={styles.box}/>
-                                  </Grid>
-                                  <Grid item xs={12} md={4}>
-                                    <TextField disabled id="standard-disabled" label="People" defaultValue={order.apartments.people} className={styles.box}/>
-                                  </Grid>
-                                </Grid>
-                                <Grid container spacing={3} justify="center">
-                                  <Grid item xs={12} md={6}>
-                                    <TextField disabled id="standard-disabled" label="Price for night" defaultValue={order.apartments.priceFromNight} className={styles.box}/>
-                                  </Grid>
-                                  <Grid item xs={12} md={6}>
-                                    <TextField disabled id="standard-disabled" label="Total price" defaultValue={order.apartments.totalPrice} className={styles.box}/>
-                                  </Grid>
-                                </Grid>
-                              </Grid>
+                              <DisplayOrderInForm order={order.apartments}/>
                           }
                           <Grid item xs={12} sm={9} align="center" className={styles.btn}>
                             <BtnSubmit variant='contained' color='secondary' text='Save'/>
