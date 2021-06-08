@@ -43,15 +43,12 @@ router.post('/orders/add', async (req,res) => {
 
 router.put('/orders/:id/edit', async (req,res) => {
   try {
-    console.log('req.body:', req.body);
     const { apartments, firstName, surname, email, phone, statusSubmited, dataSubmited, idSubmited } = req.body;
 
     const editedOrder = await Order.findById(req.body._id);
     if(editedOrder) {
       const changedOrder = await Order.updateOne({_id: req.body._id}, {$set: { apartments, firstName, surname, email, phone, statusSubmited, dataSubmited, idSubmited }});
-      await changedOrder.save();
       res.json(changedOrder);
-      console.log('changedOrder', changedOrder);
     } else {
       throw new Error('Something wrong!');
     }
@@ -63,11 +60,7 @@ router.put('/orders/:id/edit', async (req,res) => {
 
 router.delete('/orders/delete', async (req, res) => {
   try {
-    console.log('req.params:', req.params);
-    console.log('req.body w delete:', req.body);
-    // console.log('req w delete:', req);
     const deleted = await Order.findById(req.body._id);
-    console.log('deleted', deleted);
     if(deleted) {
       await Order.deleteOne({_id: req.body._id});
       res.json({message: 'Order deleted'});

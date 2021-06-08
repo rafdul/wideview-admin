@@ -11,10 +11,8 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
-import { Input } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -37,7 +35,6 @@ class Component extends React.Component {
 
   state = {
     order: {
-      // apartments: this.props.isNewOrder ? '' : this.props.oneOrder.apartments,
       apartments: this.props.isNewOrder
         ?
         {
@@ -56,23 +53,42 @@ class Component extends React.Component {
           // image: '',
         }
         :
-        this.props.oneOrder.apartments.map(el => {
-          return {
-            name: el.name,
-            city: el.city,
-            priceFromNight: el.priceFromNight,
-            category: el.category,
-            _id: el._id,
-            dataOrder: el.dataOrder,
-            idOrder: el.idOrder,
-            from: el.from,
-            nights: el.nights,
-            people: el.people,
-            totalPrice: el.totalPrice,
-            status: el.status,
-            // image: el.image,
-          };
-        }),
+        this.props.oneOrder.apartments.length > 0
+          ?
+          this.props.oneOrder.apartments.map(el => {
+            return {
+              name: el.name,
+              city: el.city,
+              priceFromNight: el.priceFromNight,
+              category: el.category,
+              _id: el._id,
+              dataOrder: el.dataOrder,
+              idOrder: el.idOrder,
+              from: el.from,
+              nights: el.nights,
+              people: el.people,
+              totalPrice: el.totalPrice,
+              status: el.status,
+              // image: el.image,
+            };
+          })
+          :
+          {
+            name: this.props.oneOrder.apartments.name,
+            city: this.props.oneOrder.apartments.city,
+            priceFromNight: this.props.oneOrder.apartments.priceFromNight,
+            category: this.props.oneOrder.apartments.category,
+            _id: this.props.oneOrder.apartments._id,
+            dataOrder: this.props.oneOrder.apartments.dataOrder,
+            idOrder: this.props.oneOrder.apartments.idOrder,
+            from: this.props.oneOrder.apartments.from,
+            nights: this.props.oneOrder.apartments.nights,
+            people: this.props.oneOrder.apartments.people,
+            totalPrice: this.props.oneOrder.apartments.totalPrice,
+            status: this.props.oneOrder.apartments.status,
+            // image: this.props.oneOrder.apartments.image,
+          },
+
       firstName: this.props.isNewOrder ? '' : this.props.oneOrder.firstName,
       surname: this.props.isNewOrder ? '' : this.props.oneOrder.surname,
       email: this.props.isNewOrder ? '' : this.props.oneOrder.email,
@@ -80,6 +96,7 @@ class Component extends React.Component {
       statusSubmited: this.props.isNewOrder ? '' : this.props.oneOrder.statusSubmited,
       dataSubmited: this.props.isNewOrder ? '' : this.props.oneOrder.dataSubmited,
       idSubmited: this.props.isNewOrder ? '' : this.props.oneOrder.idSubmited,
+      _id: this.props.isNewOrder ? '' : this.props.oneOrder._id,
       // dataOrder: { type: String },
       // status: { type: String },
       // idOrder: { type: String },
@@ -120,7 +137,7 @@ class Component extends React.Component {
   }
 
   render() {
-    const { className, oneOrder, isNewOrder, loading, offers, categories, addOneOrder } = this.props;
+    const { className, oneOrder, isNewOrder, loading, offers, categories, addOneOrder, editOneOrder } = this.props;
     const { order, statusProduct } = this.state;
     // console.log('order w state:', order);
     // console.log('order.apartments w state:', order.apartments);
@@ -139,7 +156,7 @@ class Component extends React.Component {
           </div>
           :
           <div>
-            <h2 className={styles.title}>{isNewOrder ? 'Add order' : 'Edit order'}</h2>
+            <h2 className={styles.title}>{isNewOrder ? 'Add order' : 'Edit data client'}</h2>
             <Grid container spacing={3} justify="center">
               <Grid item xs={12} sm={9}>
                 <Paper>
@@ -164,23 +181,41 @@ class Component extends React.Component {
                           // image: '',
                         }
                         :
-                        order.apartments.map(i => {
-                          return {
-                            name: i.name,
-                            city: i.city,
-                            priceFromNight: i.priceFromNight,
-                            category: i.category,
-                            _id: i._id,
-                            dataOrder: i.dataOrder,
-                            idOrder: i.idOrder,
-                            from: i.from,
-                            nights: i.nights,
-                            people: i.people,
-                            totalPrice: i.totalPrice,
-                            status: i.status,
-                            // image: i.image,
-                          };
-                        }),
+                        order.apartments.length > 0
+                          ?
+                          order.apartments.map(i => {
+                            return {
+                              name: i.name,
+                              city: i.city,
+                              priceFromNight: i.priceFromNight,
+                              category: i.category,
+                              _id: i._id,
+                              dataOrder: i.dataOrder,
+                              idOrder: i.idOrder,
+                              from: i.from,
+                              nights: i.nights,
+                              people: i.people,
+                              totalPrice: i.totalPrice,
+                              status: i.status,
+                              // image: i.image,
+                            };
+                          })
+                          :
+                          {
+                            name: order.apartments.name,
+                            city: order.apartments.city,
+                            priceFromNight: order.apartments.priceFromNight,
+                            category: order.apartments.category,
+                            _id: order.apartments._id,
+                            dataOrder: order.apartments.dataOrder,
+                            idOrder: order.apartments.idOrder,
+                            from: order.apartments.from,
+                            nights: order.apartments.nights,
+                            people: order.apartments.people,
+                            totalPrice: order.apartments.totalPrice,
+                            status: order.apartments.status,
+                            // image: order.apartments.image,
+                          },
                       firstName: order.firstName,
                       surname: order.surname,
                       email: order.email,
@@ -188,30 +223,36 @@ class Component extends React.Component {
                       statusSubmited: order.statusSubmited,
                       dataSubmited: order.dataSubmited,
                       idSubmited: order.idSubmited,
+                      _id: order._id,
                     }}
                     onSubmit={values => {
-                      values.apartments.from = this.state.dateFrom;
-                      values.apartments.nights = this.state.nights;
-                      values.apartments.totalPrice = this.state.nights * values.apartments.price;
-                      values.apartments.people = this.state.people;
-                      values.apartments.idOrder = uniqid('order-');
-                      values.apartments.dataOrder = new Date().toISOString();
-                      values.apartments.status = 'editedByAdmin';
-                      values.idSubmited = uniqid('submit-');
-                      values.statusSubmited = 'submited';
-                      values.dataSubmited = new Date().toISOString();
+                      if(isNewOrder) {
+                        values.apartments.from = this.state.dateFrom;
+                        values.apartments.nights = this.state.nights;
+                        values.apartments.totalPrice = this.state.nights * values.apartments.price;
+                        values.apartments.people = this.state.people;
+                        values.apartments.idOrder = uniqid('order-');
+                        values.apartments.dataOrder = new Date().toISOString();
+                        values.apartments.status = 'editedByAdmin';
+                        values.idSubmited = uniqid('submit-');
+                        values.statusSubmited = 'submited';
+                        values.dataSubmited = new Date().toISOString();
 
-                      if(this.state.nights < 1) {
-                        this.setState({statusProduct: {...statusProduct, nights: true}});
-                      } else if(this.state.people < 1) {
-                        this.setState({statusProduct: {...statusProduct, people: true}});
-                      } else if(!this.state.from) {
-                        this.setState({statusProduct: {...statusProduct, date: true}});
+                        if(this.state.nights < 1) {
+                          this.setState({statusProduct: {...statusProduct, nights: true}});
+                        } else if(this.state.people < 1) {
+                          this.setState({statusProduct: {...statusProduct, people: true}});
+                        } else if(!this.state.from) {
+                          this.setState({statusProduct: {...statusProduct, date: true}});
+                        } else {
+                          this.setState({statusProduct: {...statusProduct, nights: false, people: false, date: false}});
+                        }
+                        addOneOrder(values);
+                        console.log('values', values);
                       } else {
-                        this.setState({statusProduct: {...statusProduct, nights: false, people: false, date: false}});
+                        editOneOrder(values);
+                        console.log('values', values);
                       }
-                      addOneOrder(values);
-                      console.log('values', values);
                     }}
                     validationSchema={Yup.object().shape({
                       firstName: Yup.string().required('First name is required'),
@@ -282,7 +323,7 @@ class Component extends React.Component {
                             </Grid>
                             <Grid container spacing={3} justify="center">
                               <Grid item xs={12} sm={9} align="center">
-                                <h5 className={styles.subtitle}>Add suite</h5>
+                                <h5 className={styles.subtitle}>{isNewOrder ? 'Add suite' : 'Data booking'}</h5>
                               </Grid>
                             </Grid>
                           </Grid>
@@ -307,7 +348,7 @@ class Component extends React.Component {
                                     </Select>
                                   </FormControl>
                                 </Grid>
-                                {values.apartments.category.length > 0
+                                {values.apartments.category && values.apartments.category.length > 0
                                   ?
                                   <Grid item xs={12} md={6}>
                                     <FormControl fullWidth>
@@ -332,7 +373,7 @@ class Component extends React.Component {
                                   :
                                   null
                                 }
-                                {values.apartments.city.length > 0
+                                {values.apartments.city && values.apartments.city.length > 0
                                   ?
                                   <Grid item xs={12}>
                                     {offers.map(item => item.city === values.apartments.city
@@ -417,44 +458,80 @@ class Component extends React.Component {
                                   null
                                 }
                               </Grid>
-                              <Grid item xs={12} sm={9} align="center" className={styles.btn}>
+                              {/* <Grid item xs={12} sm={9} align="center" className={styles.btn}>
                                 <BtnSubmit variant='contained' color='secondary' text='Save'/>
-                              </Grid>
+                              </Grid> */}
                             </Grid>
                             :
-                            order.apartments.map(apartment =>
-                              <Grid item xs={12} sm={9} key={apartment._id}>
-                                <h6>Booking: {apartment.name}</h6>
+                            order.apartments.length > 0
+                              ?
+                              order.apartments.map(apartment =>
+                                <Grid item xs={12} sm={9} key={apartment._id}>
+                                  <h6>Booking: {apartment.name}</h6>
+                                  <Grid container spacing={3} justify="center">
+                                    <Grid item xs={12} md={6}>
+                                      <TextField disabled id="standard-disabled" label="Apartments" defaultValue={apartment.name} className={styles.box}/>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                      <TextField disabled id="standard-disabled" label="City" defaultValue={apartment.city} className={styles.box}/>
+                                    </Grid>
+                                  </Grid>
+                                  <Grid container spacing={3} justify="center">
+                                    <Grid item xs={12} md={4}>
+                                      <TextField disabled id="standard-disabled" label="Date from" defaultValue={apartment.from} className={styles.box}/>
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                      <TextField disabled id="standard-disabled" label="Nights" defaultValue={apartment.nights} className={styles.box}/>
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                      <TextField disabled id="standard-disabled" label="People" defaultValue={apartment.people} className={styles.box}/>
+                                    </Grid>
+                                  </Grid>
+                                  <Grid container spacing={3} justify="center">
+                                    <Grid item xs={12} md={6}>
+                                      <TextField disabled id="standard-disabled" label="Price for night" defaultValue={apartment.priceFromNight} className={styles.box}/>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                      <TextField disabled id="standard-disabled" label="Total price" defaultValue={apartment.totalPrice} className={styles.box}/>
+                                    </Grid>
+                                  </Grid>
+                                </Grid>
+                              )
+                              :
+                              <Grid item xs={12} sm={9} key={order.apartments._id}>
+                                <h6>Booking: {order.apartments.name}</h6>
                                 <Grid container spacing={3} justify="center">
                                   <Grid item xs={12} md={6}>
-                                    <TextField disabled id="standard-disabled" label="Apartments" defaultValue={apartment.name} className={styles.box}/>
+                                    <TextField disabled id="standard-disabled" label="Apartments" defaultValue={order.apartments.name} className={styles.box}/>
                                   </Grid>
                                   <Grid item xs={12} md={6}>
-                                    <TextField disabled id="standard-disabled" label="City" defaultValue={apartment.city} className={styles.box}/>
+                                    <TextField disabled id="standard-disabled" label="City" defaultValue={order.apartments.city} className={styles.box}/>
                                   </Grid>
                                 </Grid>
                                 <Grid container spacing={3} justify="center">
                                   <Grid item xs={12} md={4}>
-                                    <TextField disabled id="standard-disabled" label="Date from" defaultValue={apartment.from} className={styles.box}/>
+                                    <TextField disabled id="standard-disabled" label="Date from" defaultValue={order.apartments.from} className={styles.box}/>
                                   </Grid>
                                   <Grid item xs={12} md={4}>
-                                    <TextField disabled id="standard-disabled" label="Nights" defaultValue={apartment.nights} className={styles.box}/>
+                                    <TextField disabled id="standard-disabled" label="Nights" defaultValue={order.apartments.nights} className={styles.box}/>
                                   </Grid>
                                   <Grid item xs={12} md={4}>
-                                    <TextField disabled id="standard-disabled" label="People" defaultValue={apartment.people} className={styles.box}/>
+                                    <TextField disabled id="standard-disabled" label="People" defaultValue={order.apartments.people} className={styles.box}/>
                                   </Grid>
                                 </Grid>
                                 <Grid container spacing={3} justify="center">
                                   <Grid item xs={12} md={6}>
-                                    <TextField disabled id="standard-disabled" label="Price for night" defaultValue={apartment.priceFromNight} className={styles.box}/>
+                                    <TextField disabled id="standard-disabled" label="Price for night" defaultValue={order.apartments.priceFromNight} className={styles.box}/>
                                   </Grid>
                                   <Grid item xs={12} md={6}>
-                                    <TextField disabled id="standard-disabled" label="Total price" defaultValue={apartment.totalPrice} className={styles.box}/>
+                                    <TextField disabled id="standard-disabled" label="Total price" defaultValue={order.apartments.totalPrice} className={styles.box}/>
                                   </Grid>
                                 </Grid>
                               </Grid>
-                            )
                           }
+                          <Grid item xs={12} sm={9} align="center" className={styles.btn}>
+                            <BtnSubmit variant='contained' color='secondary' text='Save'/>
+                          </Grid>
                         </Grid>
                       </Form>
                     )}

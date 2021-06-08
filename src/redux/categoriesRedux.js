@@ -24,8 +24,6 @@ export const fetchAllCategories = () => {
   return async (dispatch, getState) => {
     const { categories } = getState();
 
-    console.log('categories.data.length:', categories.data.length);
-    console.log('categories.loading:', categories.loading);
     if(categories.data.length === 0 && categories.loading.active === false) {
       dispatch(fetchStarted());
 
@@ -33,11 +31,10 @@ export const fetchAllCategories = () => {
         .get(`${API_URL}/category`)
         .then(res => {
           dispatch(fetchSuccess(res.data));
-          console.log('res.data:', res.data);
+          // console.log('res.data:', res.data);
         })
         .catch(err => {
           dispatch(fetchError(err.message || true));
-          console.log('err.message:', err.message);
         });
     }
   };
@@ -56,7 +53,7 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_SUCCESS: {
-      console.log('action.payload', action.payload);
+      // console.log('action.payload', action.payload);
       return {
         ...statePart,
         loading: {

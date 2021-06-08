@@ -82,15 +82,18 @@ export const fetchAddOneOrder = (order) => {
 
 export const fetchEditOrder = (order, id) => {
   return(dispatch, getState) => {
+    console.log('order', order);
     dispatch(fetchStarted());
 
     Axios
-      .put(`${API_URL}/ordes/${id}/edit`, order)
+      .put(`${API_URL}/orders/${id}/edit`, order)
       .then(res => {
         dispatch(fetchEditOne(order));
+        console.log('order w axios:', order);
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
+        console.log('error', err);
       });
   };
 };
@@ -164,9 +167,11 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_EDIT_ONE: {
+      console.log('statePart', statePart);
+      console.log('action.payload w reducer edit:', action.payload);
       const statePartIndex = statePart.data.findIndex(order => order._id === action.payload._id);
       statePart.data.splice(statePartIndex, 1, action.payload);
-      console.log('action.payload w reducer edit:', action.payload);
+
       return {
         ...statePart,
         loading: {
